@@ -98,7 +98,7 @@ async function updateCurrentSeeders(torrents) {
     console.log(`Updating seeders for [${torrent.infoHash}] ${torrent.title} - ${torrent.seeders} -> ${newSeeders}`)
     torrent.seeders = newSeeders;
   });
-  return torrents;
+  return torrents; // TODO: getStream expects a single value and not an array
 }
 
 async function _getTorrentTrackers(torrent) {
