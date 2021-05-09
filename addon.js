@@ -1,7 +1,5 @@
 const { addonBuilder } = require("stremio-addon-sdk")
-const { getName } = require('./lib/getName')
-const { getSearch } = require("./lib/getSearch")
-const { getStream } = require("./lib/getStream")
+const { API } = require('./lib/API')
 const sortStreams = require("./sort")
 const { QualityFilter, Providers } = require('./filter')
 
@@ -34,11 +32,12 @@ function liteConfig() {
 }
 
 builder.defineStreamHandler(async ({type, id}) => {
+	let api = new API();
 	let [imdbId, season, episode] = id.split(':')
-	const name = await getName(type, imdbId)
+	const name = await api.resolveName(type, imdbId)
 	const query = name.replace(/(:)/g, '') .replace(/( )/g, '+') + "+" + season + "a+temporada"
-	const search = await getSearch(query)
-	const streams = await getStream(search, episode)
+	const searchResult = await api.search(query)
+	const streams = await api.getStream(searchResult, episode)
 	const config = liteConfig()
 	const sort = sortStreams([].concat(...streams), config)
 
