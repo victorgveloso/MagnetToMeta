@@ -22,11 +22,10 @@ const manifest = {
 }
 const builder = new addonBuilder(manifest)
 
-function liteConfig() {
+function setupConfig() {
 	const config = {};
 	config[Providers.key] = Providers.options.filter(provider => !provider.foreign).map(provider => provider.key);
 	config[QualityFilter.key] = ['scr', 'cam']
-	config['limit'] = 1;
 	config['lite'] = true;
 	return config;
 }
@@ -38,7 +37,7 @@ builder.defineStreamHandler(async ({type, id}) => {
 	const query = name.replace(/(:)/g, '') .replace(/( )/g, '+') + "+" + season + "a+temporada"
 	const searchResult = await api.search(query)
 	const streams = await api.getStream(searchResult, episode)
-	const config = liteConfig()
+	const config = setupConfig()
 	const sort = sortStreams([].concat(...streams), config)
 
 	return Promise.resolve({ streams: sort })

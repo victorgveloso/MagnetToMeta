@@ -31,43 +31,42 @@ const SortOptions = {
 
 function sortStreams(streams, config) {
   const sort = config.sort && config.sort.toLowerCase() || undefined;
-  const limit = /^[1-9][0-9]*$/.test(config.limit) && parseInt(config.limit) || undefined;
   if (sort === SortOptions.options.seeders.key) {
-    return sortBySeeders(streams, limit);
+    return sortBySeeders(streams);
   } else if (sort === SortOptions.options.size.key) {
-    return sortBySize(streams, limit);
+    return sortBySize(streams);
   }
   const nestedSort = sort === SortOptions.options.qualitySize.key ? sortBySize : noopSort;
-  return sortByVideoQuality(streams, nestedSort, limit)
+  return sortByVideoQuality(streams, nestedSort)
 }
 
 function noopSort(streams) {
   return streams;
 }
 
-function sortBySeeders(streams, limit) {
+function sortBySeeders(streams) {
   // streams are already presorted by seeders and upload date
   const healthy = streams.filter(stream => extractSeeders(stream.title) >= HEALTHY_SEEDERS);
   const seeded = streams.filter(stream => extractSeeders(stream.title) >= SEEDED_SEEDERS);
 
   if (healthy.length >= MIN_HEALTHY_COUNT) {
-    return healthy.slice(0, limit);
+    return healthy;
   } else if (seeded.length >= MAX_UNHEALTHY_COUNT) {
-    return seeded.slice(0, MIN_HEALTHY_COUNT).slice(0, limit);
+    return seeded.slice(0, MIN_HEALTHY_COUNT);
   }
-  return streams.slice(0, MAX_UNHEALTHY_COUNT).slice(0, limit);
+  return streams.slice(0, MAX_UNHEALTHY_COUNT);
 }
 
-function sortBySize(streams, limit) {
+function sortBySize(streams) {
   return sortBySeeders(streams)
       .sort((a, b) => {
         const aSize = extractSize(a.title);
         const bSize = extractSize(b.title);
         return bSize - aSize;
-      }).slice(0, limit);
+      });
 }
 
-function sortByVideoQuality(streams, nestedSort, limit) {
+function sortByVideoQuality(streams, nestedSort) {
   const qualityMap = sortBySeeders(streams)
       .reduce((map, stream) => {
         const quality = extractQuality(stream.name);
@@ -88,7 +87,7 @@ function sortByVideoQuality(streams, nestedSort, limit) {
         return a < b ? -1 : b < a ? 1 : 0; // otherwise sort by alphabetic order
       });
   return sortedQualities
-      .map(quality => nestedSort(qualityMap[quality]).slice(0, limit))
+      .map(quality => nestedSort(qualityMap[quality]))
       .reduce((a, b) => a.concat(b), []);
 }
 
