@@ -1,11 +1,12 @@
-const { QualityFilter } = require('./filter');
+const {
+  OTHER_QUALITIES,
+  CAM_QUALITIES,
+  HEALTHY_SEEDERS,
+  SEEDED_SEEDERS,
+  MIN_HEALTHY_COUNT,
+  MAX_UNHEALTHY_COUNT
+} = require('./config');
 
-const OTHER_QUALITIES = QualityFilter.options.find(option => option.key === 'other');
-const CAM_QUALITIES = QualityFilter.options.find(option => option.key === 'cam');
-const HEALTHY_SEEDERS = 5;
-const SEEDED_SEEDERS = 1;
-const MIN_HEALTHY_COUNT = 10;
-const MAX_UNHEALTHY_COUNT = 5;
 
 const SortOptions = {
   key: 'sort',
@@ -59,36 +60,36 @@ function sortBySeeders(streams) {
 
 function sortBySize(streams) {
   return sortBySeeders(streams)
-      .sort((a, b) => {
-        const aSize = extractSize(a.title);
-        const bSize = extractSize(b.title);
-        return bSize - aSize;
-      });
+    .sort((a, b) => {
+      const aSize = extractSize(a.title);
+      const bSize = extractSize(b.title);
+      return bSize - aSize;
+    });
 }
 
 function sortByVideoQuality(streams, nestedSort) {
   const qualityMap = sortBySeeders(streams)
-      .reduce((map, stream) => {
-        const quality = extractQuality(stream.name);
-        map[quality] = (map[quality] || []).concat(stream);
-        return map;
-      }, {});
+    .reduce((map, stream) => {
+      const quality = extractQuality(stream.name);
+      map[quality] = (map[quality] || []).concat(stream);
+      return map;
+    }, {});
   const sortedQualities = Object.keys(qualityMap)
-      .sort((a, b) => {
-        const aResolution = a && a.match(/\d+p/) && parseInt(a, 10);
-        const bResolution = b && b.match(/\d+p/) && parseInt(b, 10);
-        if (aResolution && bResolution) {
-          return bResolution - aResolution; // higher resolution first;
-        } else if (aResolution) {
-          return -1; // remain higher if resolution is there
-        } else if (bResolution) {
-          return 1; // move downward if other stream has resolution
-        }
-        return a < b ? -1 : b < a ? 1 : 0; // otherwise sort by alphabetic order
-      });
+    .sort((a, b) => {
+      const aResolution = a && a.match(/\d+p/) && parseInt(a, 10);
+      const bResolution = b && b.match(/\d+p/) && parseInt(b, 10);
+      if (aResolution && bResolution) {
+        return bResolution - aResolution; // higher resolution first;
+      } else if (aResolution) {
+        return -1; // remain higher if resolution is there
+      } else if (bResolution) {
+        return 1; // move downward if other stream has resolution
+      }
+      return a < b ? -1 : b < a ? 1 : 0; // otherwise sort by alphabetic order
+    });
   return sortedQualities
-      .map(quality => nestedSort(qualityMap[quality]))
-      .reduce((a, b) => a.concat(b), []);
+    .map(quality => nestedSort(qualityMap[quality]))
+    .reduce((a, b) => a.concat(b), []);
 }
 
 function extractQuality(title) {

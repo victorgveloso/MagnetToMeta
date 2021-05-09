@@ -1,7 +1,14 @@
-const { addonBuilder } = require("stremio-addon-sdk")
-const { API } = require('./lib/API')
+const {
+	addonBuilder
+} = require("stremio-addon-sdk")
+const {
+	API
+} = require('./lib/API')
 const sortStreams = require("./sort")
-const { QualityFilter, Providers } = require('./filter')
+const {
+	QualityFilter,
+	Providers
+} = require('./config')
 
 const manifest = {
 	"id": "community.",
@@ -30,17 +37,22 @@ function setupConfig() {
 	return config;
 }
 
-builder.defineStreamHandler(async ({type, id}) => {
+builder.defineStreamHandler(async ({
+	type,
+	id
+}) => {
 	let api = new API();
 	let [imdbId, season, episode] = id.split(':')
 	const name = await api.resolveName(type, imdbId)
-	const query = name.replace(/(:)/g, '') .replace(/( )/g, '+') + "+" + season + "a+temporada"
+	const query = name.replace(/(:)/g, '').replace(/( )/g, '+') + "+" + season + "a+temporada"
 	const searchResult = await api.search(query)
 	const streams = await api.getStream(searchResult, episode)
 	const config = setupConfig()
 	const sort = sortStreams([].concat(...streams), config)
 
-	return Promise.resolve({ streams: sort })
+	return Promise.resolve({
+		streams: sort
+	})
 })
 
 module.exports = builder.getInterface()
