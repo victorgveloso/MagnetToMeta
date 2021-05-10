@@ -1,18 +1,11 @@
-const axios = require('axios')
-const axios = require('axios')
-const parseTorrent = require("parse-torrent");
-const {
-    parse
-} = require('parse-torrent-title')
-const {
-    filesAndSizeFromTorrentStream
-} = require('./files');
-const {
-    updateCurrentSeeders
-} = require('../seeders');
+import axios from "axios";
+import parseTorrent from "./parse-torrent";
+import { parse } from "parse-torrent-title";
+import { filesAndSizeFromTorrentStream } from "./files";
+import { updateCurrentSeeders } from "./seeders";
 const UNKNOWN_SIZE = 300000000;
 
-function toHumanReadable(size) {
+function toHumanReadable(size: number): string | undefined {
     if (size === UNKNOWN_SIZE) {
         return undefined;
     }
@@ -21,17 +14,17 @@ function toHumanReadable(size) {
 }
 
 class API {
-    async getStream(search, episode) {
+    async getStream(search: any, episode: string) {
         const url = `https://api-siteplaceholder.herokuapp.com/v1/magnet-source/detail?url=${search[0].desc_link}&encoded=false`
         const content = await axios.get(url)
         const data = content.data
-        const stream = Promise.all(data.links.map(async (el) => {
+        const stream = Promise.all(data.links.map(async (el: any) => {
             const torrentsInput = parseTorrent(el.url);
             const seeders = await updateCurrentSeeders(torrentsInput) // Fetch Seeders info from Torrent Trackers
             const {
                 files
             } = await filesAndSizeFromTorrentStream(torrentsInput) // Get torrents' files
-            const streams = files.files.map(el => {
+            const streams = files.files.map((el: any) => {
                 const parsed = parse(el.name)
                 const data = {
                     name: el.name,
@@ -46,8 +39,8 @@ class API {
                 }
                 return data
             })
-            const metas = streams.filter(streams => streams.episode == episode)
-                .map(el => {
+            const metas = streams.filter((streams: any) => streams.episode == episode)
+                .map((el: any) => {
                     return {
                         name: `Novo Addon\n${el.resolution}`,
                         title: `${el.name}\n👤 ${el.seeders} 💾 ${toHumanReadable(el.size)}`,
@@ -62,12 +55,12 @@ class API {
         }))
         return stream
     }
-    async resolveName(type, imdbId, tmdbToken = "e4e9c05e1c65b5dc20e239cae5a88b2c") {
+    async resolveName(type: string, imdbId: string, tmdbToken = "e4e9c05e1c65b5dc20e239cae5a88b2c") {
         var meta = await this.fetchMeta(imdbId, tmdbToken);
         return type === "movie" ? meta.movie_results[0].title : meta.tv_results[0].name;
     }
 
-    async fetchMeta(imdbId, tmdbToken) {
+    async fetchMeta(imdbId: string, tmdbToken: string) {
         try {
             var meta = (
                 await axios.get(
@@ -80,13 +73,13 @@ class API {
         return meta;
     }
 
-    async search(query) {
+    async search(query: string) : Promise<any> {
         const url = `https://api-siteplaceholder.herokuapp.com/v1/magnet-source/search?url=comandotorrent&search_query=${query}&encoded=false`
         const search = await axios.get(url)
         return search.data
     }
 }
 
-module.exports = {
+export {
     API
 }

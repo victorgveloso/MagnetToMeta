@@ -148,12 +148,17 @@ function filterByQuality(streams, config) {
   });
 }
 
-module.exports = applyFilters;
-module.exports.Providers = Providers;
-module.exports.QualityFilter = QualityFilter;
-module.exports.OTHER_QUALITIES = QualityFilter.options.find(option => option.key === 'other');
-module.exports.CAM_QUALITIES = QualityFilter.options.find(option => option.key === 'cam');
-module.exports.HEALTHY_SEEDERS = 5;
-module.exports.SEEDED_SEEDERS = 1;
-module.exports.MIN_HEALTHY_COUNT = 10;
-module.exports.MAX_UNHEALTHY_COUNT = 5;
+const OTHER_QUALITIES = QualityFilter.options.find(option => option.key === 'other');
+const CAM_QUALITIES = QualityFilter.options.find(option => option.key === 'cam');
+const HEALTHY_SEEDERS = 5, SEEDED_SEEDERS = 1, MIN_HEALTHY_COUNT = 10, MAX_UNHEALTHY_COUNT = 5;
+module.exports = {
+  ...applyFilters,
+  Providers,
+  QualityFilter,
+  OTHER_QUALITIES,
+  CAM_QUALITIES,
+  HEALTHY_SEEDERS,
+  SEEDED_SEEDERS,
+  MIN_HEALTHY_COUNT,
+  MAX_UNHEALTHY_COUNT
+};

@@ -4,7 +4,7 @@ const {
 const {
 	API
 } = require('./lib/API')
-const sortStreams = require("./sort")
+const sortStreams = require("./lib/sort")
 const {
 	QualityFilter,
 	Providers

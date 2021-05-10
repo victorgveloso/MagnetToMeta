@@ -5,7 +5,7 @@ const {
   SEEDED_SEEDERS,
   MIN_HEALTHY_COUNT,
   MAX_UNHEALTHY_COUNT
-} = require('./config');
+} = require('../config');
 
 
 const SortOptions = {

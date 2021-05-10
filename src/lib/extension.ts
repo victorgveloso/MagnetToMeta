@@ -44,21 +44,21 @@ const VIDEO_EXTENSIONS = [
     "vob"
   ]
   
-  function isVideo(filename) {
+  function isVideo(filename: string) {
     return isExtension(filename, VIDEO_EXTENSIONS);
   }
   
-  function isSubtitle(filename) {
+  function isSubtitle(filename: string) {
     return isExtension(filename, SUBTITLE_EXTENSIONS);
   }
   
-  function isDisk(filename) {
+  function isDisk(filename: string) {
     return isExtension(filename, DISK_EXTENSIONS);
   }
   
-  function isExtension(filename, extensions) {
+  function isExtension(filename: string, extensions: string[]) {
     const extensionMatch = filename.match(/\.(\w{2,4})$/);
     return extensionMatch && extensions.includes(extensionMatch[1].toLowerCase());
   }
   
-  module.exports = { isVideo, isSubtitle, isDisk }
+export { isVideo, isSubtitle, isDisk };
