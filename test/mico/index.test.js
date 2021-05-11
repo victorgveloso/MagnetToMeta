@@ -5,7 +5,9 @@ var catalogDao
 var manifestDao
 const Manifest = require('../src/persistence/models/manifest')
 const Catalog = require('../src/persistence/models/catalog')
-const { addonBuilder } = require('stremio-addon-sdk');
+const {
+    addonBuilder
+} = require('stremio-addon-sdk');
 
 var manifestStub
 var catalog
@@ -31,7 +33,7 @@ describe('Given a manifest retrieved by mongo db', () => {
         }
 
         catalog = await catalogDao.add(catalogStub)
-        
+
         manifestStub = {
             id: "brazilian-addon",
             name: "Brazilian Addon",
@@ -52,6 +54,8 @@ describe('Given a manifest retrieved by mongo db', () => {
     it('Should be accepted by addonBuilder', () => {
         const addon = addonBuilder(manifest)
 
-        return expect(addon).toEqual(expect.objectContaining({defineCatalogHandler: expect.any(Function)}))
+        return expect(addon).toEqual(expect.objectContaining({
+            defineCatalogHandler: expect.any(Function)
+        }))
     })
 })

@@ -150,7 +150,10 @@ function filterByQuality(streams, config) {
 
 const OTHER_QUALITIES = QualityFilter.options.find(option => option.key === 'other');
 const CAM_QUALITIES = QualityFilter.options.find(option => option.key === 'cam');
-const HEALTHY_SEEDERS = 5, SEEDED_SEEDERS = 1, MIN_HEALTHY_COUNT = 10, MAX_UNHEALTHY_COUNT = 5;
+const HEALTHY_SEEDERS = 5,
+  SEEDED_SEEDERS = 1,
+  MIN_HEALTHY_COUNT = 10,
+  MAX_UNHEALTHY_COUNT = 5;
 module.exports = {
   ...applyFilters,
   Providers,

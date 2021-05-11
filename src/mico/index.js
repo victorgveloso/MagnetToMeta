@@ -11,7 +11,8 @@ const {
 } = require('./persistence/router');
 const serveHTTP = require('./serveHTTP');
 const {
-    addonBuilder, publishToCentral
+    addonBuilder,
+    publishToCentral
 } = require('stremio-addon-sdk');
 
 mongoose.connection.once('open', () => {
@@ -23,10 +24,14 @@ mongoose.connection.once('open', () => {
             addon.defineStreamHandler((args) => {
                 let streamDao = new StreamDAO()
                 return streamDao.getByMetaId(args.id).then((streams) => {
-                    return { streams }
+                    return {
+                        streams
+                    }
                 }).catch((error) => {
                     console.error(`Stream Handler ERROR: ${error}`)
-                    return { streams: [] }
+                    return {
+                        streams: []
+                    }
                 })
             })
 
@@ -37,20 +42,26 @@ mongoose.connection.once('open', () => {
                 const limit = 100
                 if (args.extra.search) {
                     return metaDao.getByName(args.extra.search, skip, limit).then((metas) => {
-                        return { metas }
+                        return {
+                            metas
+                        }
                     }).catch((error) => {
                         throw new Error(`Catalog Handler ERROR: ${error}`)
                     })
                 } else if (args.type == 'movie') {
                     if (args.extra.genre) {
                         return metaDao.getByGenre(args.id, args.extra.genre, skip, limit).then((metas) => {
-                            return { metas }
+                            return {
+                                metas
+                            }
                         }).catch((error) => {
                             throw new Error(`Catalog Handler ERROR: ${error}`)
                         })
                     }
                     return metaDao.getByCatalogId(args.id, skip, limit).then((metas) => {
-                        return { metas }
+                        return {
+                            metas
+                        }
                     }).catch((error) => {
                         throw new Error(`Catalog Handler ERROR: ${error}`)
                     })
@@ -62,7 +73,10 @@ mongoose.connection.once('open', () => {
             return serveHTTP(addon.getInterface(), {
                 port: PORT,
                 getRouter
-            }).then(({ url, server }) => {
+            }).then(({
+                url,
+                server
+            }) => {
                 console.log(`Listening on ${url}`)
             }).catch((error) => {
                 console.error("Couldn't start http server!")

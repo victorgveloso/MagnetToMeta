@@ -1,5 +1,6 @@
 db/
 dist/
+.vscode/
 
 # Logs
 logs

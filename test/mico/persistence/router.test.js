@@ -108,8 +108,7 @@ describe('Stream related tests', () => {
     it('Should only add unknown infoHashes from list of streams', async () => {
         await upsertMovieData({
             meta: movie.meta,
-            magnets: [
-                {
+            magnets: [{
                     title: "a last magnet",
                     magnet: "magnet:?xt=urn:btih:c7e25e85a95fc2ed93395a03a894fa07d93318f6"
                 },
@@ -141,8 +140,7 @@ describe('Stream related tests', () => {
 
         await upsertMovieData({
             meta: movie.meta,
-            magnets: [
-                {
+            magnets: [{
                     title: "a last magnet",
                     magnet: "magnet:?xt=urn:btih:c7e25e85a95fc2ed93395a03a894fa07d93318f6"
                 },

@@ -20,9 +20,9 @@ beforeAll(() => {
     metaDAO = new MetaDAO()
 })
 it('Should insert when upsert a meta with new id', async () => {
-    const addSpy = jest.spyOn(metaDAO,"add").mockImplementation(()=>{})
-    const updateSpy = jest.spyOn(metaDAO,"update").mockImplementation(()=>{})
-    const getIdSpy = jest.spyOn(metaDAO,"getById").mockImplementation((id) => {
+    const addSpy = jest.spyOn(metaDAO, "add").mockImplementation(() => {})
+    const updateSpy = jest.spyOn(metaDAO, "update").mockImplementation(() => {})
+    const getIdSpy = jest.spyOn(metaDAO, "getById").mockImplementation((id) => {
         return Promise.resolve(null)
     })
     metaDAO.getById.bind(metaDAO)
@@ -40,9 +40,9 @@ it('Should insert when upsert a meta with new id', async () => {
     getIdSpy.mockRestore()
 })
 it('Should update when upsert a meta with known id', async () => {
-    const addSpy = jest.spyOn(metaDAO,"add").mockImplementation(()=>{})
-    const updateSpy = jest.spyOn(metaDAO,"update").mockImplementation(()=>{})
-    const getIdSpy = jest.spyOn(metaDAO,"getById").mockImplementation((id) => {
+    const addSpy = jest.spyOn(metaDAO, "add").mockImplementation(() => {})
+    const updateSpy = jest.spyOn(metaDAO, "update").mockImplementation(() => {})
+    const getIdSpy = jest.spyOn(metaDAO, "getById").mockImplementation((id) => {
         return Promise.resolve(meta)
     })
     metaDAO.getById.bind(metaDAO)

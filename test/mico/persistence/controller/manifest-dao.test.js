@@ -27,7 +27,7 @@ beforeAll(async () => {
 })
 afterAll(async () => {
     console.log(origManifest);
-    
+
     await manifestDao.add(origManifest || manifestStub)
 
     await mongoose.disconnect()

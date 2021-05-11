@@ -1,7 +1,9 @@
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
-const { getRouter } = require('stremio-addon-sdk')
+const {
+	getRouter
+} = require('stremio-addon-sdk')
 const landingTemplate = require('stremio-addon-sdk/src/landingTemplate')
 const opn = require('opn')
 
@@ -23,11 +25,7 @@ function serveHTTP(addonInterface, opts = {}) {
 		next()
 	})
 
-	if (opts.getRouter) {
-		app.use(opts.getRouter(addonInterface))
-	} else {
-		app.use(getRouter(addonInterface))
-	}
+	handleRouter(opts, app, addonInterface)
 
 	// serve static dir
 	if (opts.static) {
@@ -57,10 +55,21 @@ function serveHTTP(addonInterface, opts = {}) {
 			if (process.argv.includes('--install')) {
 				opn(url.replace('http://', 'stremio://'))
 			}
-			resolve({ url, server })
+			resolve({
+				url,
+				server
+			})
 		})
 		server.on('error', reject)
 	})
 }
 
 module.exports = serveHTTP
+
+function handleRouter(opts, app, addonInterface) {
+	if (opts.getRouter) {
+		app.use(opts.getRouter(addonInterface))
+	} else {
+		app.use(getRouter(addonInterface))
+	}
+}
