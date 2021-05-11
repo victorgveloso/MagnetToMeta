@@ -8,11 +8,13 @@ USER node
 
 
 COPY --chown=node:node ./jest.config.js .
+COPY --chown=node:node ./package.json .
 COPY --chown=node:node ./package-lock.json .
 COPY --chown=node:node ./src src
-COPY --chown=node:node ./package.json .
-COPY --chown=node:node ./.js .
 COPY --chown=node:node ./test test
+COPY --chown=node:node ./tsconfig.json .
+COPY --chown=node:node ./beamup.json .
+COPY --chown=node:node ./now.json .
 COPY --chown=node:node ./wait /wait
 COPY --chown=node:node ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /wait && \
