@@ -3,10 +3,6 @@ application:
   name: "torrentaddonapi"
   project: "NovoAddon"
   organization: "QoveryCommunity"
-databases:
-- type: "MONGODB"
-  name: "storage"
-  version: "4.4"
 routers:
 - name: "main-torrentaddonapi"
   routes:
