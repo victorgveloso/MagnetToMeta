@@ -1,0 +1,11 @@
+---
+application:
+  name: "torrentaddonapi"
+  project: "NovoAddon"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-torrentaddonapi"
+  routes:
+  - application_name: "torrentaddonapi"
+    paths:
+    - "/*"
