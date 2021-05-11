@@ -1,13 +1,13 @@
 {
 	"name": "brazilian-stremio-addon",
 	"version": "0.3.0",
-    "description": "Stremio addon for dubbed movies and series in portuguese (brazil).",
+	"description": "Stremio addon for dubbed movies and series in portuguese (brazil).",
 	"scripts": {
-		"buildStart": "tsc && node dist/server.js",
+		"buildStart": "tsc && node dist/src/server.js",
 		"start": "ts-node src/server.js",
 		"test": "jest",
 		"build": "tsc",
-        "coverage": "jest --coverage"
+		"coverage": "jest --coverage"
 	},
 	"dependencies": {
 		"async": "^3.2.0",
@@ -18,9 +18,9 @@
 		"parse-torrent": "^9.1.3",
 		"parse-torrent-title": "git://github.com/TheBeastLT/parse-torrent-title.git#ee4eec8169e4ad4ab10fe4f6bf205049ce5d0ddc",
 		"torrent-stream": "^1.2.1",
-        "body-parser": "^1.19.0",
-        "mongoose": "^5.9.10",
-        "stremio-addon-sdk": "^1.2.0"
+		"body-parser": "^1.19.0",
+		"mongoose": "^5.9.10",
+		"stremio-addon-sdk": "^1.2.0"
 	},
 	"devDependencies": {
 		"@types/jest": "^26.0.23",

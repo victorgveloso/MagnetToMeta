@@ -1,5 +1,5 @@
 import axios from "axios";
-import parseTorrent from "./parse-torrent";
+import parseTorrent from "parse-torrent";
 import { parse } from "parse-torrent-title";
 import { filesAndSizeFromTorrentStream } from "./files";
 import { updateCurrentSeeders } from "./seeders";
