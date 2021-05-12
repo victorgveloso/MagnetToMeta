@@ -1,4 +1,7 @@
+ARG PORT=57841
 FROM node
+
+ENV PORT=${PORT}
 
 WORKDIR /opt/Stremio/Addon
 
@@ -20,9 +23,9 @@ COPY --chown=node:node ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /wait && \
     chmod +x /docker-entrypoint.sh
 
-RUN npm install
+RUN npm ci
 
-EXPOSE 57841
+EXPOSE ${PORT}
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD [ "start" ]

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-npm install
-
 if [ -n $1 ]; then
     echo "Argument \$1 found! Value: $1"
     echo "Waiting for dependencies start..."
