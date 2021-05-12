@@ -17,48 +17,48 @@ const VIDEO_EXTENSIONS = [
     "wmv",
     "ogm",
     "divx"
-  ];
-  const SUBTITLE_EXTENSIONS = [
-    "aqt",
-    "gsub",
-    "jss",
-    "sub",
-    "ttxt",
-    "pjs",
-    "psb",
-    "rt",
-    "smi",
-    "slt",
-    "ssf",
-    "srt",
-    "ssa",
-    "ass",
-    "usf",
-    "idx",
-    "vtt"
-  ];
-  const DISK_EXTENSIONS = [
-    "iso",
-    "m2ts",
-    "ts",
-    "vob"
-  ]
-  
-  function isVideo(filename: string) {
-    return isExtension(filename, VIDEO_EXTENSIONS);
-  }
-  
-  function isSubtitle(filename: string) {
-    return isExtension(filename, SUBTITLE_EXTENSIONS);
-  }
-  
-  function isDisk(filename: string) {
-    return isExtension(filename, DISK_EXTENSIONS);
-  }
-  
-  function isExtension(filename: string, extensions: string[]) {
-    const extensionMatch = filename.match(/\.(\w{2,4})$/);
-    return extensionMatch && extensions.includes(extensionMatch[1].toLowerCase());
-  }
-  
+];
+const SUBTITLE_EXTENSIONS = [
+  "aqt",
+  "gsub",
+  "jss",
+  "sub",
+  "ttxt",
+  "pjs",
+  "psb",
+  "rt",
+  "smi",
+  "slt",
+  "ssf",
+  "srt",
+  "ssa",
+  "ass",
+  "usf",
+  "idx",
+  "vtt"
+];
+const DISK_EXTENSIONS = [
+  "iso",
+  "m2ts",
+  "ts",
+  "vob"
+]
+
+function isVideo(filename: string) {
+  return isExtension(filename, VIDEO_EXTENSIONS);
+}
+
+function isSubtitle(filename: string) {
+  return isExtension(filename, SUBTITLE_EXTENSIONS);
+}
+
+function isDisk(filename: string) {
+  return isExtension(filename, DISK_EXTENSIONS);
+}
+
+function isExtension(filename: string, extensions: string[]) {
+  const extensionMatch = filename.match(/\.(\w{2,4})$/);
+  return extensionMatch && extensions.includes(extensionMatch[1].toLowerCase());
+}
+
 export { isVideo, isSubtitle, isDisk };

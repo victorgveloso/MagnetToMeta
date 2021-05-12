@@ -13,7 +13,7 @@ function toHumanReadable(size: number): string | undefined {
     return Number((size / Math.pow(1024, i)).toFixed(2)) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 }
 
-class API {
+export class API {
     async getStream(search: any, episode: string) {
         const url = `https://api-siteplaceholder.herokuapp.com/v1/magnet-source/detail?url=${search[0].desc_link}&encoded=false`
         const content = await axios.get(url)
@@ -78,8 +78,4 @@ class API {
         const search = await axios.get(url)
         return search.data
     }
-}
-
-export {
-    API
 }
