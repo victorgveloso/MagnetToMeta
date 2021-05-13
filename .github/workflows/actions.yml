@@ -6,12 +6,13 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  unit-tests:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - run: docker-compose build
-    - run: docker-compose run test
+    - run: docker-compose up mongo -d
+    - run: docker-compose run addon test
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -53,4 +54,4 @@ jobs:
         # Delay between retries
         retry-delay: 5s # Optional, only applicable to max-attempts > 1
         # Retry all errors, including 404
-        retry-all: no # Optional, defaults to "no"
+        retry-all: yes # Optional, defaults to "no"

@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-const Stream = require('../../../src/persistence/models/stream')
+const Stream = require('../../../../src/mico/persistence/models/stream')
 
 beforeAll(async () => {
-    await require('../../../src/config')
+    await require('../../../../src/mico/config')
 })
 afterAll(async () => {
     await mongoose.disconnect()

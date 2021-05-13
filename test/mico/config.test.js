@@ -7,7 +7,7 @@ it('Should exists and be in a default state', () => {
 
 describe('Mongo connection dependent tets', () => {
     beforeAll(async () => {
-        await require('../src/config')
+        await require('../../src/mico/config')
     })
     afterAll(async () => {
         await mongoose.disconnect().catch(fail)

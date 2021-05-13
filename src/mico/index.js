@@ -24,27 +24,32 @@ mongoose.connection.once('open', () => {
     let manifestDao = new ManifestDAO()
     manifestDao.get()
         .then((manifest) => {
-
-            const builder = new addonBuilder(manifest.toObject());
-            builder.defineStreamHandler(createStreamHandler);
-            builder.defineCatalogHandler(createCatalogHandler);
-
-            // publishToCentral('https://stremio-brazilian-addon.herokuapp.com/manifest.json');
-
-            return new HttpServer(builder.getInterface(), {
-                port: PORT,
-                getRouter
-            }).serve().then(({
-                url
-            }) => {
-                console.log(`Listening on ${url}`);
-            }).catch((error) => {
-                console.error("Couldn't start http server!");
-                console.error(error);
-            });
+            init(manifest);
         })
         .catch((error) => {
             console.error("Something went wrong!");
             console.error(error);
         })
 });
+
+function init(manifest) {
+    new HttpServer(setupAddonInterface(manifest), {
+        port: PORT,
+        getRouter
+    }).serve().then(({
+        url
+    }) => {
+        console.log(`Listening on ${url}`);
+        // publishToCentral('https://stremio-brazilian-addon.herokuapp.com/manifest.json');
+    }).catch((error) => {
+        console.error("Couldn't start http server!");
+        console.error(error);
+    });
+}
+function setupAddonInterface(manifest) {
+    const builder = new addonBuilder(manifest.toObject());
+    builder.defineStreamHandler(createStreamHandler);
+    builder.defineCatalogHandler(createCatalogHandler);
+    return builder.getInterface();
+}
+

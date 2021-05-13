@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-const CatalogDAO = require('../../../src/persistence/controllers/catalog-dao')
-const ManifestDAO = require('../../../src/persistence/controllers/manifest-dao')
+const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog-dao')
+const ManifestDAO = require('../../../../src/mico/persistence/controllers/manifest-dao')
 var catalogDao
 var manifestDao
-const Manifest = require('../../../src/persistence/models/manifest')
-const Catalog = require('../../../src/persistence/models/catalog')
+const Manifest = require('../../../../src/mico/persistence/models/manifest')
+const Catalog = require('../../../../src/mico/persistence/models/catalog')
 var catalogStub = {
     type: "movie",
     id: "BrazilianCatalog",
@@ -16,7 +16,7 @@ var manifestStub
 var catalog
 var origManifest, origCatalog
 beforeAll(async () => {
-    await require('../../../src/config')
+    await require('../../../../src/mico/config')
     catalogDao = new CatalogDAO()
     manifestDao = new ManifestDAO()
 

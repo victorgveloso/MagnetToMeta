@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
-const CatalogDAO = require('../../../src/persistence/controllers/catalog-dao')
+const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog-dao')
 var catalogDao
-const Catalog = require('../../../src/persistence/models/catalog')
+const Catalog = require('../../../../src/mico/persistence/models/catalog')
 
 var catalogStub = {
     type: "movie",
@@ -12,7 +12,7 @@ var catalogStub = {
 }
 var catalog
 beforeAll(async () => {
-    await require('../../../src/config')
+    await require('../../../../src/mico/config')
     catalogDao = new CatalogDAO()
 })
 afterAll(async () => {

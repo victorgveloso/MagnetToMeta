@@ -8,14 +8,20 @@ const DB_USER = process.env.DB_USER
 const DB_PSK = process.env.DB_PSK
 
 async function connect() {
+    let CREDENTIALS = "";
+    if (DB_USER && DB_PSK) CREDENTIALS = `${DB_USER}:${DB_PSK}@`
     try {
-        let CREDENTIALS = ""
-        if (DB_USER && DB_PSK) CREDENTIALS = `${DB_USER}:${DB_PSK}@`
         const mongouri = `mongodb+srv://${CREDENTIALS}${DB_HOST}:/${DB_NAME}`
         await mongoose.connect(mongouri)
         return mongouri
     } catch (err) {
-        throw new Error(`Could not connect to db 'mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}': ${err}`)
+        try {
+            const mongouri = `mongodb://${CREDENTIALS}${DB_HOST}:${DB_PORT}/${DB_NAME}`
+            await mongoose.connect(mongouri)
+            return mongouri
+        } catch (err) {
+            throw new Error(`Could not connect to db 'mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}': ${err}`);
+        }
     }
 }
 

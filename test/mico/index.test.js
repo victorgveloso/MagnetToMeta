@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-const ManifestDAO = require('../src/persistence/controllers/manifest-dao')
-const CatalogDAO = require('../src/persistence/controllers/catalog-dao')
+const ManifestDAO = require('../../src/mico/persistence/controllers/manifest-dao')
+const CatalogDAO = require('../../src/mico/persistence/controllers/catalog-dao')
 var catalogDao
 var manifestDao
-const Manifest = require('../src/persistence/models/manifest')
-const Catalog = require('../src/persistence/models/catalog')
+const Manifest = require('../../src/mico/persistence/models/manifest')
+const Catalog = require('../../src/mico/persistence/models/catalog')
 const {
     addonBuilder
 } = require('stremio-addon-sdk');
@@ -15,7 +15,7 @@ var manifest
 
 describe('Given a manifest retrieved by mongo db', () => {
     beforeAll(async () => {
-        await require('../src/config')
+        await require('../../src/mico/config')
         catalogDao = new CatalogDAO()
         manifestDao = new ManifestDAO()
     })
