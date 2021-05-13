@@ -1,0 +1,51 @@
+{
+    "key": "providers",
+    "options": [{
+        "key": "yts",
+        "label": "YTS"
+        },
+        {
+        "key": "eztv",
+        "label": "EZTV"
+        },
+        {
+        "key": "rarbg",
+        "label": "RARBG"
+        },
+        {
+        "key": "1337x",
+        "label": "1337x"
+        },
+        {
+        "key": "thepiratebay",
+        "label": "ThePirateBay"
+        },
+        {
+        "key": "kickasstorrents",
+        "label": "KickassTorrents"
+        },
+        {
+        "key": "torrentgalaxy",
+        "label": "TorrentGalaxy"
+        },
+        {
+        "key": "rutor",
+        "label": "Rutor",
+        "foreign": true
+        },
+        {
+        "key": "horriblesubs",
+        "label": "HorribleSubs",
+        "anime": true
+        },
+        {
+        "key": "nyaasi",
+        "label": "NyaaSi",
+        "anime": true
+        },
+        {
+        "key": "nyaapantsu",
+        "label": "NyaaPantsu",
+        "anime": true
+        }]
+}
