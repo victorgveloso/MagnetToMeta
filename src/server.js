@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 
-const {
-    serveHTTP,
-    publishToCentral
-} = require("stremio-addon-sdk")
-const addonInterface = require("./addon")
+import { serveHTTP, publishToCentral } from "stremio-addon-sdk"
+import addonInterface from "./addon"
 serveHTTP(addonInterface, {
     port: process.env.PORT || 57841
 })

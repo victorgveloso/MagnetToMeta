@@ -1,26 +1,19 @@
-var mongoose = require('mongoose')
-const {
-    PORT
-} = require('./config')
-const ManifestDAO = require('./persistence/controllers/manifest-dao');
+import { connection } from 'mongoose';
+import { PORT, connect } from './config';
+import ManifestDAO from './persistence/controllers/manifest-dao';
 
-const {
-    getRouter
-} = require('./persistence/router');
-const {
-    HttpServer
-} = require('./HttpServer');
-const {
-    addonBuilder,
-    // publishToCentral
-} = require('stremio-addon-sdk');
+import { getRouter } from './persistence/router';
+import { HttpServer } from './HttpServer';
+import { addonBuilder } from 'stremio-addon-sdk';
+
+import { createCatalogHandler, createStreamHandler } from './addon';
 
 const {
     createCatalogHandler,
     createStreamHandler
 } = require('./addon');
 
-mongoose.connection.once('open', () => {
+connection.once('open', () => {
     let manifestDao = new ManifestDAO()
     manifestDao.get()
         .then((manifest) => {

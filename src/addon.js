@@ -1,14 +1,7 @@
-const {
-	addonBuilder
-} = require("stremio-addon-sdk")
-const {
-	API
-} = require('./lib/API')
-const sortStreams = require("./lib/sort")
-const {
-	QualityFilter,
-	Providers
-} = require('./config')
+import { addonBuilder } from "stremio-addon-sdk"
+import { API } from './lib/API'
+import sortStreams from "./lib/sort"
+import { QualityFilter, Providers } from './config'
 
 const manifest = {
 	"id": "community.",
@@ -55,4 +48,4 @@ builder.defineStreamHandler(async ({
 	})
 })
 
-module.exports = builder.getInterface()
+export default builder.getInterface()

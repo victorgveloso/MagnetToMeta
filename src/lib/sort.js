@@ -1,11 +1,4 @@
-const {
-  OTHER_QUALITIES,
-  CAM_QUALITIES,
-  HEALTHY_SEEDERS,
-  SEEDED_SEEDERS,
-  MIN_HEALTHY_COUNT,
-  MAX_UNHEALTHY_COUNT
-} = require('../config');
+import { OTHER_QUALITIES, CAM_QUALITIES, HEALTHY_SEEDERS, SEEDED_SEEDERS, MIN_HEALTHY_COUNT, MAX_UNHEALTHY_COUNT } from '../config';
 
 
 const SortOptions = {
@@ -136,5 +129,6 @@ function parseSize(sizeText) {
   return Math.floor(parseFloat(sizeText.replace(/,/g, '')) * scale);
 }
 
-module.exports = sortStreams;
-module.exports.SortOptions = SortOptions;
+export default sortStreams;
+const _SortOptions = SortOptions;
+export { _SortOptions as SortOptions };
