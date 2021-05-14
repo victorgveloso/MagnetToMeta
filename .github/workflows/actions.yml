@@ -40,7 +40,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run buildStart & 
-    - run: curl --fail -sv  https://localhost:57841/manifest.json --retry 5 --retry-delay 5 --retry-connrefused --retry-all-errors
+    - run: curl --fail -sv  https://localhost:57841/manifest.json --retry 5 --retry-delay 5 --retry-connrefused
     # - name: Check the deployed service URL
     #   uses: jtalk/url-health-check-action@v1.5
     #   with:
