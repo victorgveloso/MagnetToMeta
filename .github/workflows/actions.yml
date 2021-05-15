@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: docker-compose build
-    - run: docker-compose up -d mongo
-    - run: docker-compose run addon test --forceExit
+    - run: make build
+    - run: make test-ci
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -42,7 +41,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run buildStart & 
-    - run: curl --fail -sv  http://localhost:57841/manifest.json --retry 5 --retry-delay 5 --retry-connrefused
+    - run: curl --fail -sv  http://localhost:57841/manifest.json --retry 12 --retry-delay 5 --retry-connrefused
     # - name: Check the deployed service URL
     #   uses: jtalk/url-health-check-action@v1.5
     #   with:
