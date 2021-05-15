@@ -35,8 +35,9 @@ beforeAll(async () => {
 });
 afterAll(async () => {
     console.log(origManifest);
-
-    await manifestDao.add(origManifest || manifestStub);
+    try {
+        await manifestDao.add(origManifest || manifestStub);
+    } catch(error) { /* Do nothing. */}
 
     await mongoose.disconnect();
 });
