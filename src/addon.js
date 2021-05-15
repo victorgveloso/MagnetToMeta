@@ -1,7 +1,7 @@
-import { addonBuilder } from "stremio-addon-sdk"
-import { API } from './lib/API'
-import sortStreams from "./lib/sort"
-import { QualityFilter, Providers } from './mico/config'
+import { addonBuilder } from "stremio-addon-sdk";
+import { API } from './lib/API';
+import sortStreams from "./lib/sort";
+import { QualityFilter, Providers } from './mico/config';
 
 const manifest = {
 	"id": "community.",
@@ -19,13 +19,13 @@ const manifest = {
 	"idPrefixes": [
 		"tt"
 	]
-}
-const builder = new addonBuilder(manifest)
+};
+const builder = new addonBuilder(manifest);
 
 function setupConfig() {
 	const config = {};
 	config[Providers.key] = Providers.options.filter(provider => !provider.foreign).map(provider => provider.key);
-	config[QualityFilter.key] = ['scr', 'cam']
+	config[QualityFilter.key] = ['scr', 'cam'];
 	config['lite'] = true;
 	return config;
 }
@@ -35,17 +35,17 @@ builder.defineStreamHandler(async ({
 	id
 }) => {
 	let api = new API();
-	let [imdbId, season, episode] = id.split(':')
-	const name = await api.resolveName(type, imdbId)
-	const query = name.replace(/(:)/g, '').replace(/( )/g, '+') + "+" + season + "a+temporada"
-	const searchResult = await api.search(query)
-	const streams = await api.getStream(searchResult, episode)
-	const config = setupConfig()
-	const sort = sortStreams([].concat(...streams), config)
+	let [imdbId, season, episode] = id.split(':');
+	const name = await api.resolveName(type, imdbId);
+	const query = name.replace(/(:)/g, '').replace(/( )/g, '+') + "+" + season + "a+temporada";
+	const searchResult = await api.search(query);
+	const streams = await api.getStream(searchResult, episode);
+	const config = setupConfig();
+	const sort = sortStreams([].concat(...streams), config);
 
 	return Promise.resolve({
 		streams: sort
-	})
-})
+	});
+});
 
-export default builder.getInterface()
+export default builder.getInterface();

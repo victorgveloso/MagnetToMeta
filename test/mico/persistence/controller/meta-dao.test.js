@@ -1,5 +1,5 @@
 const MetaDAO = require('../../../../src/mico/persistence/controllers/meta-dao')
-var metaDAO
+var metaDAO;
 
 var meta = {
     id: "tt18374950",
@@ -17,45 +17,41 @@ var meta = {
 }
 
 beforeAll(() => {
-    metaDAO = new MetaDAO()
-})
+    metaDAO = new MetaDAO();
+});
 it('Should insert when upsert a meta with new id', async () => {
-    const addSpy = jest.spyOn(metaDAO, "add").mockImplementation(() => {})
-    const updateSpy = jest.spyOn(metaDAO, "update").mockImplementation(() => {})
-    const getIdSpy = jest.spyOn(metaDAO, "getById").mockImplementation((id) => {
-        return Promise.resolve(null)
-    })
-    metaDAO.getById.bind(metaDAO)
+    const addSpy = jest.spyOn(metaDAO, "add").mockImplementation(() => {});
+    const updateSpy = jest.spyOn(metaDAO, "update").mockImplementation(() => {});
+    const getIdSpy = jest.spyOn(metaDAO, "getById").mockImplementation((id) => Promise.resolve(null));
+    metaDAO.getById.bind(metaDAO);
 
-    await metaDAO.upsert(meta)
+    await metaDAO.upsert(meta);
 
-    expect(addSpy).toBeCalledTimes(1)
-    expect(addSpy).toBeCalledWith(meta)
-    expect(getIdSpy).toBeCalledTimes(1)
-    expect(getIdSpy).toBeCalledWith(meta.id)
-    expect(updateSpy).not.toBeCalled()
+    expect(addSpy).toBeCalledTimes(1);
+    expect(addSpy).toBeCalledWith(meta);
+    expect(getIdSpy).toBeCalledTimes(1);
+    expect(getIdSpy).toBeCalledWith(meta.id);
+    expect(updateSpy).not.toBeCalled();
 
-    addSpy.mockRestore()
-    updateSpy.mockRestore()
-    getIdSpy.mockRestore()
-})
+    addSpy.mockRestore();
+    updateSpy.mockRestore();
+    getIdSpy.mockRestore();
+});
 it('Should update when upsert a meta with known id', async () => {
-    const addSpy = jest.spyOn(metaDAO, "add").mockImplementation(() => {})
-    const updateSpy = jest.spyOn(metaDAO, "update").mockImplementation(() => {})
-    const getIdSpy = jest.spyOn(metaDAO, "getById").mockImplementation((id) => {
-        return Promise.resolve(meta)
-    })
-    metaDAO.getById.bind(metaDAO)
+    const addSpy = jest.spyOn(metaDAO, "add").mockImplementation(() => {});
+    const updateSpy = jest.spyOn(metaDAO, "update").mockImplementation(() => {});
+    const getIdSpy = jest.spyOn(metaDAO, "getById").mockImplementation((id) => Promise.resolve(meta));
+    metaDAO.getById.bind(metaDAO);
 
-    await metaDAO.upsert(meta)
+    await metaDAO.upsert(meta);
 
-    expect(updateSpy).toBeCalledTimes(1)
-    expect(updateSpy).toBeCalledWith(meta)
-    expect(getIdSpy).toBeCalledTimes(1)
-    expect(getIdSpy).toBeCalledWith(meta.id)
-    expect(addSpy).not.toBeCalled()
+    expect(updateSpy).toBeCalledTimes(1);
+    expect(updateSpy).toBeCalledWith(meta);
+    expect(getIdSpy).toBeCalledTimes(1);
+    expect(getIdSpy).toBeCalledWith(meta.id);
+    expect(addSpy).not.toBeCalled();
 
-    addSpy.mockRestore()
-    updateSpy.mockRestore()
-    getIdSpy.mockRestore()
-})
+    addSpy.mockRestore();
+    updateSpy.mockRestore();
+    getIdSpy.mockRestore();
+});

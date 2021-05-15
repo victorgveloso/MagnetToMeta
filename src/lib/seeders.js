@@ -32,7 +32,7 @@ async function _getAllTorrentsTrackers(torrents) {
     .then(torrentTrackers => ({
       infoHash: torrent.infoHash,
       trackers: torrentTrackers
-    }))))
+    }))));
 }
 
 function _groupByTrackers(torrentsTrackers) {
@@ -59,16 +59,16 @@ function _scrapeTrackersWithTimeout(mapTrackerInfoHash, callback) {
         results
           .filter(([infoHash]) => perTorrentResults[infoHash])
           .forEach(([infoHash, seeders]) =>
-            perTorrentResults[infoHash][tracker] = [seeders.complete, seeders.incomplete])
+            perTorrentResults[infoHash][tracker] = [seeders.complete, seeders.incomplete]);
         successfullTrackersCount++;
       } else if (error) {
         mapTrackerInfoHash[tracker]
           .filter(infoHash => perTorrentResults[infoHash])
-          .forEach(infoHash => perTorrentResults[infoHash][tracker] = [0, 0, error.message])
+          .forEach(infoHash => perTorrentResults[infoHash][tracker] = [0, 0, error.message]);
       }
       ready();
-    })
-  }, callback)
+    });
+  }, callback);
 }
 
 
@@ -82,7 +82,7 @@ async function _getSeedersPerTorrent(torrentsInput) {
 
     let successfullTrackersCount = 0;
     const callback = () => {
-      console.log(`[LOG] Total successful tracker responses: ${successfullTrackersCount}`)
+      console.log(`[LOG] Total successful tracker responses: ${successfullTrackersCount}`);
       resolve(perTorrentResults);
     };
     _scrapeTrackersWithTimeout(perTrackerInfoHashes, callback);
@@ -95,7 +95,7 @@ async function updateCurrentSeeders(torrents) {
   torrentsArray.forEach(torrent => {
     const results = perTorrentResults[torrent.infoHash];
     const newSeeders = Math.max(...Object.values(results).map(values => values[0]), 0);
-    console.log(`Updating seeders for [${torrent.infoHash}] ${torrent.title} - ${torrent.seeders} -> ${newSeeders}`)
+    console.log(`Updating seeders for [${torrent.infoHash}] ${torrent.title} - ${torrent.seeders} -> ${newSeeders}`);
     torrent.seeders = newSeeders;
   });
   return torrents; // TODO: getStream expects a single value and not an array
@@ -121,4 +121,4 @@ async function _getDefaultTrackers(torrent, retry = 3) {
 
 module.exports = {
   updateCurrentSeeders
-}
+};

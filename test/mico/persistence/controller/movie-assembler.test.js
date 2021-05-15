@@ -7,6 +7,8 @@ const streamDao = new StreamDao();
 const Stream = require('../../../../src/mico/persistence/models/stream');
 const Meta = require('../../../../src/mico/persistence/models/meta');
 
+jest.retryTimes(5);
+
 describe('When a movie is disassembled', () => {
     let movie;
     beforeAll(async () => {

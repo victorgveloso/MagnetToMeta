@@ -9,6 +9,8 @@ const {
 
 var catalogDao, manifestDao, manifestStub, catalog, manifest;
 
+jest.retryTimes(5);
+
 describe('Given a manifest retrieved by mongo db', () => {
     beforeAll(async () => {
         let {
@@ -18,10 +20,10 @@ describe('Given a manifest retrieved by mongo db', () => {
 
         catalogDao = new CatalogDAO();
         manifestDao = new ManifestDAO();
-    })
+    });
     afterAll(async () => {
         await mongoose.disconnect();
-    })
+    });
     beforeEach(async () => {
         var catalogStub = {
             type: "movie",
@@ -46,7 +48,7 @@ describe('Given a manifest retrieved by mongo db', () => {
         };
 
         manifest = await manifestDao.add(manifestStub);
-    })
+    });
     afterEach(async () => {
         await Manifest.deleteMany({}).exec();
         await Catalog.deleteMany({}).exec();

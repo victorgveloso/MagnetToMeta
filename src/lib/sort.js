@@ -21,7 +21,7 @@ const SortOptions = {
       description: 'By size'
     },
   }
-}
+};
 
 function sortStreams(streams, config) {
   const sort = config.sort && config.sort.toLowerCase() || undefined;
@@ -31,7 +31,7 @@ function sortStreams(streams, config) {
     return sortBySize(streams);
   }
   const nestedSort = sort === SortOptions.options.qualitySize.key ? sortBySize : noopSort;
-  return sortByVideoQuality(streams, nestedSort)
+  return sortByVideoQuality(streams, nestedSort);
 }
 
 function noopSort(streams) {
@@ -91,9 +91,9 @@ function extractQuality(title) {
   if (resolutionMatch) {
     return resolutionMatch[0];
   } else if (/8k/i.test(qualityDesc)) {
-    return '4320p'
+    return '4320p';
   } else if (/4k|uhd/i.test(qualityDesc)) {
-    return '2060p'
+    return '2060p';
   } else if (CAM_QUALITIES.test(qualityDesc)) {
     return CAM_QUALITIES.label;
   } else if (OTHER_QUALITIES.test(qualityDesc)) {
@@ -118,9 +118,9 @@ function parseSize(sizeText) {
   }
   let scale = 1;
   if (sizeText.includes('TB')) {
-    scale = 1024 * 1024 * 1024 * 1024
+    scale = 1024 * 1024 * 1024 * 1024;
   } else if (sizeText.includes('GB')) {
-    scale = 1024 * 1024 * 1024
+    scale = 1024 * 1024 * 1024;
   } else if (sizeText.includes('MB')) {
     scale = 1024 * 1024;
   } else if (sizeText.includes('kB')) {

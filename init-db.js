@@ -1,4 +1,4 @@
-br = db.getSiblingDB('brazilian-stremio-addon')
+br = db.getSiblingDB('brazilian-stremio-addon');
 br.manifests.insert({
     id: "brazilian-addon",
     name: "Mico-Leão Dublado (BR addon)",
@@ -15,4 +15,4 @@ br.manifests.insert({
         extraSupported: ["search", "genre", "skip"]
     }],
     idPrefixes: ["tt"]
-})
+});

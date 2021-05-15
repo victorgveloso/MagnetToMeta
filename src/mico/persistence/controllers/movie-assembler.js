@@ -1,4 +1,4 @@
-const magnet = require('magnet-uri')
+const magnet = require('magnet-uri');
 
 function toStreamData(movie) {
     return movie.magnets.map((m) => {
@@ -13,7 +13,7 @@ function toStreamData(movie) {
             type: 'movie',
             infoHash,
             sources
-        }
+        };
     });
 }
 
@@ -22,5 +22,5 @@ module.exports = (movie) => {
     return {
         meta: movie.meta,
         streams: toStreamData(movie),
-    }
-}
+    };
+};

@@ -49,4 +49,4 @@ module.exports = {
             test: (quality) => !quality
         }
     ]
-}
+};

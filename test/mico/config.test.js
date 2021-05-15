@@ -1,9 +1,11 @@
-var mongoose = require('mongoose')
-const timeout = require('./timeout')
+var mongoose = require('mongoose');
+const timeout = require('./timeout');
 
 it('Should exists and be in a default state', () => {
     expect(mongoose.connection.readyState).toEqual(mongoose.connection.states.disconnected);
 });
+
+jest.retryTimes(5);
 
 describe('Mongo connection dependent tets', () => {
     beforeAll(async () => {
@@ -14,7 +16,7 @@ describe('Mongo connection dependent tets', () => {
     });
     afterAll(async () => {
         await mongoose.disconnect();
-    })
+    });
     it('Should connect to running database', async () => {
         await timeout(500);
         await expect(mongoose.connection.readyState).toEqual(mongoose.connection.states.connected);
@@ -42,6 +44,6 @@ describe('Mongo connection dependent tets', () => {
         expect(account.name).toEqual(obtained_account.name);
 
         await Account.deleteMany({}).exec();
-    })
+    });
 
-})
+});

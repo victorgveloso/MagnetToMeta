@@ -1,10 +1,8 @@
 var mongoose = require('mongoose');
-const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog-dao')
-const ManifestDAO = require('../../../../src/mico/persistence/controllers/manifest-dao')
-var catalogDao
-var manifestDao
-const Manifest = require('../../../../src/mico/persistence/models/manifest')
-const Catalog = require('../../../../src/mico/persistence/models/catalog')
+const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog-dao');
+const ManifestDAO = require('../../../../src/mico/persistence/controllers/manifest-dao');
+const Manifest = require('../../../../src/mico/persistence/models/manifest');
+const Catalog = require('../../../../src/mico/persistence/models/catalog');
 var catalogStub = {
     type: "movie",
     id: "BrazilianCatalog",
@@ -13,6 +11,9 @@ var catalogStub = {
     extraSupported: ["search", "genre"],
 };
 var manifestStub, catalog, origManifest, catalogDao, manifestDao;
+
+jest.retryTimes(5);
+
 beforeAll(async () => {
     let {
         connect

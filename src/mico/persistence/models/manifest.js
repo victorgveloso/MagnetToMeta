@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-const CatalogSchema = require("./catalog").CatalogSchema
+const { CatalogSchema } = require("./catalog");
 
 const Schema = mongoose.Schema;
 
@@ -41,5 +41,5 @@ const ManifestSchema = new Schema({
 
 const Manifest = mongoose.model('Manifest', ManifestSchema);
 
-module.exports = Manifest
-module.exports.ManifestSchema = ManifestSchema
+module.exports = Manifest;
+module.exports.ManifestSchema = ManifestSchema;

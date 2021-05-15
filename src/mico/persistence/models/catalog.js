@@ -26,5 +26,5 @@ const CatalogSchema = new Schema({
 });
 const Catalog = mongoose.model('Catalog', CatalogSchema);
 
-module.exports = Catalog
-module.exports.CatalogSchema = CatalogSchema
+module.exports = Catalog;
+module.exports.CatalogSchema = CatalogSchema;

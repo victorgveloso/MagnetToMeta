@@ -1,5 +1,5 @@
 const decode = require('magnet-uri');
-const torrentStream = require('torrent-stream')
+const torrentStream = require('torrent-stream');
 
 const MAX_PEER_CONNECTIONS = process.env.MAX_PEER_CONNECTIONS || 20;
 
@@ -36,4 +36,4 @@ function filesAndSizeFromTorrentStream(torrent, timeout = 30000) {
   });
 }
 
-module.exports = { filesAndSizeFromTorrentStream }
+module.exports = { filesAndSizeFromTorrentStream };

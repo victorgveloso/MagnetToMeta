@@ -23,7 +23,7 @@ import {
 } from './addon';
 
 connect().then((mongo_uri) => {
-    console.log(`MONGO URI: ${mongo_uri}`)
+    console.log(`MONGO URI: ${mongo_uri}`);
 }).catch(console.error);
 
 connection.once('open', () => {
@@ -35,7 +35,7 @@ connection.once('open', () => {
         .catch((error) => {
             console.error("Something went wrong!");
             console.error(error);
-        })
+        });
 });
 
 function init(manifest) {

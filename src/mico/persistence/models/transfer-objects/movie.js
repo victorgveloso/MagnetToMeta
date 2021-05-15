@@ -15,4 +15,4 @@ const Movie = {
     },
     magnets: [""],
 }
-module.exports = Movie
+module.exports = Movie;

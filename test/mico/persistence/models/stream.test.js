@@ -1,18 +1,20 @@
 var mongoose = require('mongoose');
-const Stream = require('../../../../src/mico/persistence/models/stream')
+const Stream = require('../../../../src/mico/persistence/models/stream');
+
+jest.retryTimes(5);
 
 beforeAll(async () => {
     let {
         connect
     } = require('../../../../src/mico/config');
     await connect();
-})
+});
 afterAll(async () => {
     await mongoose.disconnect();
-})
+});
 afterEach(async () => {
     await Stream.deleteMany({}).exec();
-})
+});
 
 const StreamStub = () => {
     return {

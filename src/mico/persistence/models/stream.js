@@ -25,5 +25,5 @@ const StreamSchema = new Schema({
 });
 
 const Stream = mongoose.model('Stream', StreamSchema);
-module.exports = Stream
-module.exports.StreamSchema = StreamSchema
+module.exports = Stream;
+module.exports.StreamSchema = StreamSchema;
