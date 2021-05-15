@@ -1,7 +1,7 @@
 import { addonBuilder } from "stremio-addon-sdk"
 import { API } from './lib/API'
 import sortStreams from "./lib/sort"
-import { QualityFilter, Providers } from './config'
+import { QualityFilter, Providers } from './mico/config'
 
 const manifest = {
 	"id": "community.",
