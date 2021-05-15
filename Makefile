@@ -2,7 +2,7 @@ all: build clean test start
 build:
 	docker-compose build
 start: 
-	docker-compose --volumes --rmi local
+	docker-compose down --volumes --rmi local
 	docker-compose up -d mongo
 	docker-compose run addon start
 test: mongo
