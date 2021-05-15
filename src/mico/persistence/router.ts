@@ -1,13 +1,11 @@
-const {
-    getRouter
-} = require('stremio-addon-sdk');
-const bodyParser = require('body-parser');
-const disassemble = require('./controllers/movie-assembler');
-const MetaDAO = require('./controllers/meta-dao');
-const StreamDAO = require('./controllers/stream-dao');
+import { getRouter } from 'stremio-addon-sdk';
+import bodyParser from 'body-parser';
+import disassemble from './controllers/movie-assembler';
+import MetaDAO from './controllers/meta-dao';
+import StreamDAO from './controllers/stream-dao';
 
 
-async function upsertMovieData(movie) {
+export async function upsertMovieData(movie: any) {
     let metaDao = new MetaDAO();
     let streamDao = new StreamDAO();
 
@@ -17,12 +15,12 @@ async function upsertMovieData(movie) {
     } = disassemble(movie);
 
     await metaDao.addIfAbsent(meta);
-    await streams.map(m => {
+    await streams.map((m: any) => {
         streamDao.addIfAbsent(m)
     });
 }
 
-function getProxyRouter(addonInterface) {
+function getProxyRouter(addonInterface: any) {
     const router = getRouter(addonInterface);
 
     router.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -30,7 +28,7 @@ function getProxyRouter(addonInterface) {
         extended: true
     }));
 
-    router.post('/movie', (req, res) => {
+    router.post('/movie', (req: any, res: any) => {
 
         upsertMovieData(req.body)
             .then(() => res.send(200))
@@ -39,7 +37,8 @@ function getProxyRouter(addonInterface) {
 
     return router;
 }
-module.exports = {
-    upsertMovieData,
-    getRouter: getProxyRouter
+
+
+export {
+    getRouter as getProxyRouter
 };

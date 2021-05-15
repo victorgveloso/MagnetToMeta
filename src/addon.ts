@@ -1,4 +1,4 @@
-import { addonBuilder } from "stremio-addon-sdk";
+import { addonBuilder, Manifest } from "stremio-addon-sdk";
 import { API } from './lib/API';
 import sortStreams from "./lib/sort";
 import { QualityFilter, Providers } from './mico/config';
@@ -20,10 +20,10 @@ const manifest = {
 		"tt"
 	]
 };
-const builder = new addonBuilder(manifest);
+const builder = new addonBuilder(manifest as Manifest);
 
 function setupConfig() {
-	const config = {};
+	const config: any = {};
 	config[Providers.key] = Providers.options.filter(provider => !provider.foreign).map(provider => provider.key);
 	config[QualityFilter.key] = ['scr', 'cam'];
 	config['lite'] = true;
@@ -39,7 +39,7 @@ builder.defineStreamHandler(async ({
 	const name = await api.resolveName(type, imdbId);
 	const query = name.replace(/(:)/g, '').replace(/( )/g, '+') + "+" + season + "a+temporada";
 	const searchResult = await api.search(query);
-	const streams = await api.getStream(searchResult, episode);
+	const streams: any = await api.getStream(searchResult, episode);
 	const config = setupConfig();
 	const sort = sortStreams([].concat(...streams), config);
 
@@ -48,4 +48,4 @@ builder.defineStreamHandler(async ({
 	});
 });
 
-export default builder.getInterface();
+export default builder.getInterface() as Object;

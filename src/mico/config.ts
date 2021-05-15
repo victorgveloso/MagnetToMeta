@@ -62,3 +62,5 @@ export async function connect() {
     }
     return mongouri;
 }
+
+export { QualityFilter, Providers };
