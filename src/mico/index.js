@@ -24,6 +24,8 @@ import {
 
 import { createSeriesStreamHandler } from '../addon';
 
+import DefaultManifest from './persistence/models/stub/manifest.json';
+
 connect().then((mongo_uri) => {
     console.log(`MONGO URI: ${mongo_uri}`);
 }).catch(console.error);
@@ -35,8 +37,10 @@ connection.once('open', () => {
             init(manifest);
         })
         .catch((error) => {
-            console.error("Something went wrong!");
+            console.error("[Warning] Something went wrong!");
             console.error(error);
+            console.error("[Warning] Falling back to default manifest");
+            init(new DefaultManifest());
         });
 });
 
