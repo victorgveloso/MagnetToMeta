@@ -22,10 +22,16 @@ beforeAll(async () => {
     catalogDao = new CatalogDAO();
     manifestDao = new ManifestDAO();
 
-    origManifest = await manifestDao.get();
+    try {
+        origManifest = await manifestDao.get();
+    } catch (error) {
+        origManifest = require("../../../../src/mico/persistence/models/stub/manifest.json");
+    } 
+    finally {
+        await Manifest.deleteMany({}).exec();
+        await Catalog.deleteMany({}).exec();
+    }
 
-    await Manifest.deleteMany({}).exec();
-    await Catalog.deleteMany({}).exec();
 });
 afterAll(async () => {
     console.log(origManifest);

@@ -53,14 +53,19 @@ afterEach(async () => {
     try {
         await Promise.all([Meta.deleteMany().exec(), Stream.deleteMany().exec()]);
     } catch (error) {
-        throw Error("Exception thrown during test tear down " + error);
+        throw Error("Exception thrown during test clean up (tear down) " + error);
     }
 });
 beforeEach(async () => {
     try {
+        await Promise.all([Meta.deleteMany().exec(), Stream.deleteMany().exec()]);
+    } catch (error) {
+        throw Error("Exception thrown during test clean up (set up) " + error);
+    }
+    try {
         await upsertMovieData(movie);
     } catch (error) {
-        throw Error("Exception thrown during test set up " + error);
+        throw Error("Exception thrown during movie insertion (set up) " + error);
     }
 });
 describe('Meta related tests', () => {
