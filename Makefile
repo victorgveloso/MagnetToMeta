@@ -2,8 +2,7 @@ all: build clean test start
 build:
 	docker-compose build
 start: 
-	docker-compose down
-	docker volume prune
+	docker-compose --volumes --rmi local
 	docker-compose up -d mongo
 	docker-compose run addon start
 test: mongo
@@ -13,6 +12,4 @@ test-ci: mongo
 mongo:
 	docker-compose up -d mongo
 clean:
-	docker volume prune
-prune: 
-	docker-compose down
+	docker-compose down --volumes --rmi local
