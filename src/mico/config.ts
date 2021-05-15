@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Providers from "../providers.json";
+import Providers from "../mico/persistence/models/stub/providers.json";
 import QualityFilter from "./persistence/models/stub/quality";
 
 // TODO: export and identify where filters should be used
