@@ -22,6 +22,8 @@ import {
     createStreamHandler
 } from './addon';
 
+import { createSeriesStreamHandler } from '../addon';
+
 connect().then((mongo_uri) => {
     console.log(`MONGO URI: ${mongo_uri}`);
 }).catch(console.error);
@@ -53,9 +55,21 @@ function init(manifest) {
     });
 }
 
+function createJointStreamHandler(args) {
+    if(args.type === "movie") {
+        return createStreamHandler(args);
+    }
+    else if (args.type === "series") {
+        return createSeriesStreamHandler(args);
+    }
+    else {
+        throw Error(`Unsupported Stream format ${args.type}`);
+    }
+}
+
 function setupAddonInterface(manifest) {
     const builder = new addonBuilder(manifest.toObject());
-    builder.defineStreamHandler(createStreamHandler);
+    builder.defineStreamHandler(createJointStreamHandler);
     builder.defineCatalogHandler(createCatalogHandler);
     return builder.getInterface();
 }

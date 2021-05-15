@@ -6,7 +6,7 @@ br.manifests.insert({
     version: "0.2.0",
     description: "Stremio addon for dubbed movies in portuguese (brazil).",
     resources: ["catalog", "stream"],
-    types: ["movie"],
+    types: ["movie","series"],
     catalogs: [{
         type: "movie",
         id: "BrazilianCatalog",

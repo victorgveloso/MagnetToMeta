@@ -1,0 +1,17 @@
+{
+	"id": "community.",
+	"version": "0.0.1",
+	"catalogs": [],
+	"resources": [
+		"stream"
+	],
+	"types": [
+		"movie",
+		"series"
+	],
+	"name": "Novo Addon",
+	"description": "",
+	"idPrefixes": [
+		"tt"
+	]
+}
