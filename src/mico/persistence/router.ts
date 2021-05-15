@@ -40,5 +40,5 @@ function getProxyRouter(addonInterface: any) {
 
 
 export {
-    getRouter as getProxyRouter
+    getProxyRouter as getRouter
 };
