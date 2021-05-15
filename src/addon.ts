@@ -2,11 +2,11 @@ import { addonBuilder, Manifest } from "stremio-addon-sdk";
 import { API } from './lib/API';
 import sortStreams from "./lib/sort";
 import { QualityFilter, Providers } from './mico/config';
-import manifest from './manifest.json';
+import manifest from './mico/persistence/models/stub/manifest.json';
 
 function setupConfig() {
 	const config: any = {};
-	config[Providers.key] = Providers.options.filter(provider => !provider.foreign).map(provider => provider.key);
+	config[Providers.key] = Providers.options.filter((provider: any) => !provider.foreign).map((provider: any) => provider.key);
 	config[QualityFilter.key] = ['scr', 'cam'];
 	config['lite'] = true;
 	return config;
