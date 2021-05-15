@@ -30,7 +30,10 @@ const movie = {
 };
 beforeAll(async () => {
     try {
-        await require('../../../src/mico/config');
+        let {
+            connect
+        } = require('../../../src/mico/config');
+        await connect();
         await Promise.all([Meta.deleteMany().exec(), Stream.deleteMany().exec()]);
     } catch (error) {
         throw Error("Exception thrown during test class setup " + error);
@@ -38,7 +41,7 @@ beforeAll(async () => {
 })
 afterAll(async () => {
     try {
-        await mongoose.disconnect().catch(fail);
+        await mongoose.disconnect();
     } catch (error) {
         throw Error("Exception thrown during mongoose disconnection " + error);
     }

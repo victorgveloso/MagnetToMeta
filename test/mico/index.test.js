@@ -1,26 +1,26 @@
 var mongoose = require('mongoose');
-const ManifestDAO = require('../../src/mico/persistence/controllers/manifest-dao')
-const CatalogDAO = require('../../src/mico/persistence/controllers/catalog-dao')
-var catalogDao
-var manifestDao
-const Manifest = require('../../src/mico/persistence/models/manifest')
-const Catalog = require('../../src/mico/persistence/models/catalog')
+const ManifestDAO = require('../../src/mico/persistence/controllers/manifest-dao');
+const CatalogDAO = require('../../src/mico/persistence/controllers/catalog-dao');
+const Manifest = require('../../src/mico/persistence/models/manifest');
+const Catalog = require('../../src/mico/persistence/models/catalog');
 const {
     addonBuilder
 } = require('stremio-addon-sdk');
 
-var manifestStub
-var catalog
-var manifest
+var catalogDao, manifestDao, manifestStub, catalog, manifest;
 
 describe('Given a manifest retrieved by mongo db', () => {
     beforeAll(async () => {
-        await require('../../src/mico/config')
-        catalogDao = new CatalogDAO()
-        manifestDao = new ManifestDAO()
+        let {
+            connect
+        } = require('../../src/mico/config');
+        await connect();
+
+        catalogDao = new CatalogDAO();
+        manifestDao = new ManifestDAO();
     })
     afterAll(async () => {
-        await mongoose.disconnect()
+        await mongoose.disconnect();
     })
     beforeEach(async () => {
         var catalogStub = {
@@ -30,9 +30,9 @@ describe('Given a manifest retrieved by mongo db', () => {
             extra: [{
                 name: "search"
             }]
-        }
+        };
 
-        catalog = await catalogDao.add(catalogStub)
+        catalog = await catalogDao.add(catalogStub);
 
         manifestStub = {
             id: "brazilian-addon",
@@ -43,19 +43,19 @@ describe('Given a manifest retrieved by mongo db', () => {
             types: ["movie"],
             catalogs: [catalog],
             idPrefixes: ["tt"]
-        }
+        };
 
-        manifest = await manifestDao.add(manifestStub)
+        manifest = await manifestDao.add(manifestStub);
     })
     afterEach(async () => {
-        await Manifest.deleteMany({}).exec()
-        await Catalog.deleteMany({}).exec()
-    })
+        await Manifest.deleteMany({}).exec();
+        await Catalog.deleteMany({}).exec();
+    });
     it('Should be accepted by addonBuilder', () => {
-        const addon = addonBuilder(manifest)
+        const addon = addonBuilder(manifest);
 
         return expect(addon).toEqual(expect.objectContaining({
             defineCatalogHandler: expect.any(Function)
-        }))
-    })
-})
+        }));
+    });
+});

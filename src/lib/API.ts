@@ -73,7 +73,7 @@ export class API {
         return meta;
     }
 
-    async search(query: string) : Promise<any> {
+    async search(query: string): Promise<any> {
         const url = `https://api-siteplaceholder.herokuapp.com/v1/magnet-source/search?url=comandotorrent&search_query=${query}&encoded=false`
         const search = await axios.get(url)
         return search.data

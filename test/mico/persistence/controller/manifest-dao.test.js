@@ -11,29 +11,30 @@ var catalogStub = {
     name: "Filmes Dublados (ptbr)",
     genres: ["Ação", "Animação", "Aventura", "Clássico", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Faroeste", "Guerra", "Músicas", "Nacional", "Policial", "Romance", "Suspense", "Terror"],
     extraSupported: ["search", "genre"],
-}
-var manifestStub
-var catalog
-var origManifest, origCatalog
+};
+var manifestStub, catalog, origManifest, catalogDao, manifestDao;
 beforeAll(async () => {
-    await require('../../../../src/mico/config')
-    catalogDao = new CatalogDAO()
-    manifestDao = new ManifestDAO()
+    let {
+        connect
+    } = require('../../../../src/mico/config');
+    await connect();
+    catalogDao = new CatalogDAO();
+    manifestDao = new ManifestDAO();
 
-    origManifest = await manifestDao.get()
+    origManifest = await manifestDao.get();
 
-    await Manifest.deleteMany({}).exec()
-    await Catalog.deleteMany({}).exec()
-})
+    await Manifest.deleteMany({}).exec();
+    await Catalog.deleteMany({}).exec();
+});
 afterAll(async () => {
     console.log(origManifest);
 
-    await manifestDao.add(origManifest || manifestStub)
+    await manifestDao.add(origManifest || manifestStub);
 
-    await mongoose.disconnect()
-})
+    await mongoose.disconnect();
+});
 beforeEach(async () => {
-    catalog = await catalogDao.add(catalogStub)
+    catalog = await catalogDao.add(catalogStub);
 
     manifestStub = {
         id: "brazilian-addon",
@@ -44,22 +45,22 @@ beforeEach(async () => {
         types: ["movie"],
         catalogs: [catalog.toObject()],
         idPrefixes: ["tt"]
-    }
+    };
 
-})
+});
 afterEach(async () => {
-    await Manifest.deleteMany({}).exec()
-    await Catalog.deleteMany({}).exec()
-})
+    await Manifest.deleteMany({}).exec();
+    await Catalog.deleteMany({}).exec();
+});
 
 describe('When a manifest is added to db', () => {
-    var manifest
+    var manifest;
     beforeEach(async () => {
-        m = await manifestDao.add(manifestStub)
+        m = await manifestDao.add(manifestStub);
 
-        manifest = await manifestDao.get()
+        manifest = await manifestDao.get();
 
-    })
+    });
     it('should be returned by manifestDao.get', async () => {
 
         expect(manifest).toMatchObject({
@@ -69,16 +70,16 @@ describe('When a manifest is added to db', () => {
             idPrefixes: expect.any(Array),
             resources: expect.any(Array),
             types: expect.any(Array)
-        })
-    })
+        });
+    });
     it('should contain catalog in catalogs list', async () => {
         expect(manifest.catalogs).toEqual(expect.arrayContaining([expect.objectContaining({
             id: catalogStub.id
-        })]))
-    })
+        })]));
+    });
     it('should have a complete catalogs property', async () => {
         for (const prop in catalogStub) {
-            expect(manifest.catalogs[0]).toHaveProperty(prop)
+            expect(manifest.catalogs[0]).toHaveProperty(prop);
         }
-    })
-})
+    });
+});

@@ -1,24 +1,27 @@
 var mongoose = require('mongoose');
-const MovieAssembler = require('../../../../src/mico/persistence/controllers/movie-assembler')
+const MovieAssembler = require('../../../../src/mico/persistence/controllers/movie-assembler');
 const MetaDao = require('../../../../src/mico/persistence/controllers/meta-dao');
 const metaDao = new MetaDao();
 const StreamDao = require('../../../../src/mico/persistence/controllers/stream-dao');
 const streamDao = new StreamDao();
-const Stream = require('../../../../src/mico/persistence/models/stream')
-const Meta = require('../../../../src/mico/persistence/models/meta')
+const Stream = require('../../../../src/mico/persistence/models/stream');
+const Meta = require('../../../../src/mico/persistence/models/meta');
 
 describe('When a movie is disassembled', () => {
-    let movie
+    let movie;
     beforeAll(async () => {
-        await require('../../../../src/mico/config')
-    })
+        let {
+            connect
+        } = require('../../../../src/mico/config');
+        await connect();
+    });
     afterAll(async () => {
-        await mongoose.disconnect()
-    })
+        await mongoose.disconnect();
+    });
     afterEach(async () => {
-        await Stream.deleteMany({}).exec()
-        await Meta.deleteMany({}).exec()
-    })
+        await Stream.deleteMany({}).exec();
+        await Meta.deleteMany({}).exec();
+    });
     beforeEach(async () => {
         movie = {
             meta: {
@@ -39,35 +42,35 @@ describe('When a movie is disassembled', () => {
                 title: "anyTitle Test",
                 magnet: "magnet:?xt=urn:btih:6a8acb2eacd447671dab59dbb6ff1aa61e6ae31f&dn=COMANDO.TO%20-%20Star%20Wars%20-%20A%20Ascens%c3%a3o%20Skywalker%202020%205.1%20(1080p)%20DUAL&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=udp%3a%2f%2fglotorrents.pw%3a6969%2fannounce&tr=udp%3a%2f%2ftracker4.piratux.com%3a6969%2fannounce&tr=udp%3a%2f%2fcoppersurfer.tk%3a6969%2fannounce&tr=http%3a%2f%2ft2.pow7.com%2fannounce&tr=udp%3a%2f%2ftracker.yify-torrents.com%3a80%2fannounce&tr=http%3a%2f%2fwww.h33t.com%3a3310%2fannounce&tr=http%3a%2f%2fexodus.desync.com%2fannounce&tr=http%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=http%3a%2f%2fbt.careland.com.cn%3a6969%2fannounce&tr=http%3a%2f%2fexodus.desync.com%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.istole.it%3a80%2fannounce&tr=http%3a%2f%2ftracker.blazing.de%2fannounce&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=http%3a%2f%2ftracker.yify-torrents.com%2fannounce&tr=udp%3a%2f%2ftracker.prq.to%2fannounce&tr=udp%3a%2f%2ftracker.1337x.org%3a80%2fannounce&tr=udp%3a%2f%2f9.rarbg.com%3a2740%2fannounce&tr=udp%3a%2f%2ftracker.ex.ua%3a80%2fannounce&tr=udp%3a%2f%2fipv4.tracker.harry.lu%3a80%2fannounce&tr=udp%3a%2f%2f12.rarbg.me%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2f11.rarbg.com%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce&tr=udp%3a%2f%2ffr33dom.h33t.com%3a3310%2fannounce&tr=udp%3a%2f%2fpublic.popcorn-tracker.org%3a6969%2fannounce"
             }],
-        }
+        };
         var {
             meta,
             streams
-        } = MovieAssembler(movie)
+        } = MovieAssembler(movie);
 
-        await metaDao.add(meta)
-        await streamDao.addIfAbsent(streams[0])
-    })
+        await metaDao.add(meta);
+        await streamDao.addIfAbsent(streams[0]);
+    });
 
     it('Should be in the stream collection', async () => {
         console.log(await metaDao.getAll());
 
-        var meta = await metaDao.getById(movie.meta.id)
+        var meta = await metaDao.getById(movie.meta.id);
 
         for (const prop in movie.meta) {
-            expect(meta).toHaveProperty(prop)
+            expect(meta).toHaveProperty(prop);
         }
-    })
+    });
     it('Should be in the meta collection', async () => {
-        var stream = (await streamDao.getByMetaId(movie.meta.id))[0]
+        var stream = (await streamDao.getByMetaId(movie.meta.id))[0];
 
-        var hostnamePattern = /\w+:\/\/(.*?)[:/]?.*/g
+        var hostnamePattern = /\w+:\/\/(.*?)[:/]?.*/g;
 
-        expect(movie.magnets[0].magnet).toContain(stream.infoHash)
+        expect(movie.magnets[0].magnet).toContain(stream.infoHash);
         for (i of stream.sources) {
-            expect(movie.magnets[0].magnet).toContain(i.replace(hostnamePattern, '$1'))
+            expect(movie.magnets[0].magnet).toContain(i.replace(hostnamePattern, '$1'));
         }
-        expect(stream.metaId).toEqual(movie.meta.id)
-        expect(stream.title).toEqual(movie.magnets[0].title)
-    })
-})
+        expect(stream.metaId).toEqual(movie.meta.id);
+        expect(stream.title).toEqual(movie.magnets[0].title);
+    });
+});

@@ -1,17 +1,30 @@
-import { connection } from 'mongoose';
-import { PORT, connect } from './config';
+import {
+    connection
+} from 'mongoose';
+import {
+    PORT,
+    connect
+} from './config';
 import ManifestDAO from './persistence/controllers/manifest-dao';
 
-import { getRouter } from './persistence/router';
-import { HttpServer } from './HttpServer';
-import { addonBuilder } from 'stremio-addon-sdk';
+import {
+    getRouter
+} from './persistence/router';
+import {
+    HttpServer
+} from './HttpServer';
+import {
+    addonBuilder
+} from 'stremio-addon-sdk';
 
-import { createCatalogHandler, createStreamHandler } from './addon';
-
-const {
+import {
     createCatalogHandler,
     createStreamHandler
-} = require('./addon');
+} from './addon';
+
+connect().then((mongo_uri) => {
+    console.log(`MONGO URI: ${mongo_uri}`)
+}).catch(console.error);
 
 connection.once('open', () => {
     let manifestDao = new ManifestDAO()
@@ -39,10 +52,10 @@ function init(manifest) {
         console.error(error);
     });
 }
+
 function setupAddonInterface(manifest) {
     const builder = new addonBuilder(manifest.toObject());
     builder.defineStreamHandler(createStreamHandler);
     builder.defineCatalogHandler(createCatalogHandler);
     return builder.getInterface();
 }
-
