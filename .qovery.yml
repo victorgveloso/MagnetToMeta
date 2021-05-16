@@ -14,4 +14,4 @@ routers:
   routes:
   - application_name: "torrentaddonapi"
     paths:
-    - "/v1/*"
+    - "/*"
