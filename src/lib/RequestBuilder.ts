@@ -19,18 +19,22 @@ export class RequestBuilder {
         this._tmdbToken = tmdbToken;
     }
 
+    private clone() {
+        return new RequestBuilder(this.host, this._url, this._query, this._imdbId, this.version, this.encoded, this._tmdbToken);
+    }
+
     url(url: string): RequestBuilder {
-        let result = new RequestBuilder(this.host, this._url, this._query, this._imdbId, this.version, this.encoded, this._tmdbToken);
+        let result = this.clone();
         result._url = url;
         return result;
     }
     imdbId(id: string): RequestBuilder {
-        let result = new RequestBuilder(this.host, this._url, this._query, this._imdbId, this.version, this.encoded, this._tmdbToken);
+        let result = this.clone();
         result._imdbId = id;
         return result;
     }
     tmdbToken(token: string): RequestBuilder {
-        let result = new RequestBuilder(this.host, this._url, this._query, this._imdbId, this.version, this.encoded, this._tmdbToken);
+        let result = this.clone();
         result._tmdbToken = token;
         return result;
     }
@@ -47,7 +51,7 @@ export class RequestBuilder {
         return `${this.host}/${this.version}/magnet-source/detail?url=${this._url}&encoded=${this.encoded}`;
     }
     query(query: string): RequestBuilder {
-        let result = new RequestBuilder(this.host, this._url, this._query, this._imdbId, this.version, this.encoded, this._tmdbToken);
+        let result = this.clone();
         result._query = query;
         return result;
     }
