@@ -1,11 +1,15 @@
 ---
 application:
-  name: "torrentaddonapi"
+  name: "micoleaodublado"
   project: "NovoAddon"
   organization: "QoveryCommunity"
+databases:
+- type: "MONGODB"
+  name: "mongo"
+  version: "3.6"
 routers:
-- name: "main-torrentaddonapi"
+- name: "main-micoleaodublado"
   routes:
-  - application_name: "torrentaddonapi"
+  - application_name: "micoleaodublado"
     paths:
     - "/*"
