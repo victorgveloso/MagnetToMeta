@@ -19,10 +19,9 @@ import {
 
 import {
     createCatalogHandler,
-    createStreamHandler
+    createStreamHandler,
+    createSeriesStreamHandler
 } from './addon';
-
-import { createSeriesStreamHandler } from '../addon';
 
 import DefaultManifest from './persistence/models/stub/manifest.json';
 
