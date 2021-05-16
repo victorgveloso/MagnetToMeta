@@ -1,20 +1,20 @@
 var mongoose = require('mongoose');
-const MovieAssembler = require('../../../../src/mico/persistence/controllers/movie-assembler');
-const MetaDao = require('../../../../src/mico/persistence/controllers/meta-dao');
+const MovieAssembler = require('../../../src/persistence/controllers/movie-assembler');
+const MetaDao = require('../../../src/persistence/controllers/meta-dao');
 const metaDao = new MetaDao();
-const StreamDao = require('../../../../src/mico/persistence/controllers/stream-dao');
+const StreamDao = require('../../../src/persistence/controllers/stream-dao');
 const streamDao = new StreamDao();
-const Stream = require('../../../../src/mico/persistence/models/stream');
-const Meta = require('../../../../src/mico/persistence/models/meta');
+const Stream = require('../../../src/persistence/models/stream');
+const Meta = require('../../../src/persistence/models/meta');
+const {
+    connect
+} = require('../../../src/config');
 
 jest.retryTimes(5);
 
 describe('When a movie is disassembled', () => {
     let movie;
     beforeAll(async () => {
-        let {
-            connect
-        } = require('../../../../src/mico/config');
         await connect();
     });
     afterAll(async () => {

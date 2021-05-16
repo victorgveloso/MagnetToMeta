@@ -2,11 +2,14 @@ var mongoose = require('mongoose');
 const timeout = require('../timeout');
 const {
     upsertMovieData
-} = require('../../../src/mico/persistence/router');
-const MetaDAO = require('../../../src/mico/persistence/controllers/meta-dao');
-const StreamDAO = require('../../../src/mico/persistence/controllers/stream-dao');
-const Meta = require('../../../src/mico/persistence/models/meta');
-const Stream = require('../../../src/mico/persistence/models/stream');
+} = require('../../src/persistence/router');
+const MetaDAO = require('../../src/persistence/controllers/meta-dao');
+const StreamDAO = require('../../src/persistence/controllers/stream-dao');
+const Meta = require('../../src/persistence/models/meta');
+const Stream = require('../../src/persistence/models/stream');
+const {
+    connect
+} = require('../../src/config');
 
 const movie = {
     meta: {
@@ -33,9 +36,6 @@ jest.retryTimes(5);
 
 beforeAll(async () => {
     try {
-        let {
-            connect
-        } = require('../../../src/mico/config');
         await connect();
         await Promise.all([Meta.deleteMany().exec(), Stream.deleteMany().exec()]);
     } catch (error) {

@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-const Stream = require('../../../../src/mico/persistence/models/stream');
+const Stream = require('../../../src/persistence/models/stream');
+const {
+    connect
+} = require('../../../src/config');
 
 jest.retryTimes(5);
 
 beforeAll(async () => {
-    let {
-        connect
-    } = require('../../../../src/mico/config');
     await connect();
 });
 afterAll(async () => {

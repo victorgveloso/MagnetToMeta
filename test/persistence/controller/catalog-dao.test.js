@@ -1,15 +1,15 @@
 var mongoose = require('mongoose');
-const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog-dao');
-const Catalog = require('../../../../src/mico/persistence/models/catalog');
-const catalogStub = require('../../../../src/mico/persistence/models/stub/catalog.json');
+const CatalogDAO = require('../../../src/persistence/controllers/catalog-dao');
+const Catalog = require('../../../src/persistence/models/catalog');
+const catalogStub = require('../../../src/persistence/models/stub/catalog.json');
+const {
+    connect
+} = require('../../../src/config');
 var catalogDao, catalog;
 
 jest.retryTimes(5);
 
 beforeAll(async () => {
-    let {
-        connect
-    } = require('../../../../src/mico/config');
     await connect();
     catalogDao = new CatalogDAO();
 });

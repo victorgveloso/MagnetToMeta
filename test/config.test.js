@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 const timeout = require('./timeout');
+const {
+    connect
+} = require('../src/config');
 
 it('Should exists and be in a default state', () => {
     expect(mongoose.connection.readyState).toEqual(mongoose.connection.states.disconnected);
@@ -9,9 +12,6 @@ jest.retryTimes(5);
 
 describe('Mongo connection dependent tets', () => {
     beforeAll(async () => {
-        let {
-            connect
-        } = require('../../src/mico/config');
         await connect();
     });
     afterAll(async () => {

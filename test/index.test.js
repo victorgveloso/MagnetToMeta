@@ -1,11 +1,14 @@
 var mongoose = require('mongoose');
-const ManifestDAO = require('../../src/mico/persistence/controllers/manifest-dao');
-const CatalogDAO = require('../../src/mico/persistence/controllers/catalog-dao');
-const Manifest = require('../../src/mico/persistence/models/manifest');
-const Catalog = require('../../src/mico/persistence/models/catalog');
+const ManifestDAO = require('../src/persistence/controllers/manifest-dao');
+const CatalogDAO = require('../src/persistence/controllers/catalog-dao');
+const Manifest = require('../src/persistence/models/manifest');
+const Catalog = require('../src/persistence/models/catalog');
 const {
     addonBuilder
 } = require('stremio-addon-sdk');
+const {
+    connect
+} = require('../src/config');
 
 var catalogDao, manifestDao, manifestStub, catalog, manifest;
 
@@ -13,9 +16,6 @@ jest.retryTimes(5);
 
 describe('Given a manifest retrieved by mongo db', () => {
     beforeAll(async () => {
-        let {
-            connect
-        } = require('../../src/mico/config');
         await connect();
 
         catalogDao = new CatalogDAO();

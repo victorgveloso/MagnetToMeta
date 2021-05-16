@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Providers from "../mico/persistence/models/stub/providers.json";
+import Providers from "./persistence/models/stub/providers.json";
 import QualityFilter from "./persistence/models/stub/quality";
 
 export const OTHER_QUALITIES = QualityFilter.options.find(option => option.key === 'other'),
@@ -31,6 +31,14 @@ export async function connect() {
         }
     }
     return mongouri;
+}
+
+export function setupConfig() {
+	const config: any = {};
+	config[Providers.key] = Providers.options.filter((provider: any) => !provider.foreign).map((provider: any) => provider.key);
+	config[QualityFilter.key] = ['scr', 'cam'];
+	config['lite'] = true;
+	return config;
 }
 
 export { QualityFilter, Providers };
