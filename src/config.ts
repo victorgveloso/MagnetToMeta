@@ -15,6 +15,8 @@ export const DB_PORT = process.env.DB_PORT || 27017;
 export const DB_NAME = process.env.DB_NAME || "brazilian-addon-db";
 const DB_USER = process.env.DB_USER;
 const DB_PSK = process.env.DB_PSK;
+export const SCRAPPER_API_HOST = process.env.SCRAPPER_API_HOST || "https://api-siteplaceholder.herokuapp.com";
+export const UNKNOWN_SIZE = 300000000;
 
 export async function connect() {
     let CREDENTIALS = "";
