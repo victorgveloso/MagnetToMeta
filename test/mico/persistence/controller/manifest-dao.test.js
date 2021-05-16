@@ -3,13 +3,7 @@ const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog
 const ManifestDAO = require('../../../../src/mico/persistence/controllers/manifest-dao');
 const Manifest = require('../../../../src/mico/persistence/models/manifest');
 const Catalog = require('../../../../src/mico/persistence/models/catalog');
-var catalogStub = {
-    type: "movie",
-    id: "BrazilianCatalog",
-    name: "Filmes Dublados (ptbr)",
-    genres: ["Ação", "Animação", "Aventura", "Clássico", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Faroeste", "Guerra", "Músicas", "Nacional", "Policial", "Romance", "Suspense", "Terror"],
-    extraSupported: ["search", "genre"],
-};
+const catalogStub = require('../../../../src/mico/persistence/models/stub/catalog.json');
 var manifestStub, catalog, origManifest, catalogDao, manifestDao;
 
 jest.retryTimes(5);

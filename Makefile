@@ -4,7 +4,7 @@ build:
 start: 
 	docker-compose down --volumes --rmi local
 	docker-compose up -d mongo
-	docker-compose run addon start
+	docker-compose run --service-ports addon start
 test: mongo
 	docker-compose run addon test --detectOpenHandles
 test-ci: mongo

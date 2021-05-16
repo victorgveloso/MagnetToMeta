@@ -2,36 +2,6 @@ import mongoose from 'mongoose';
 import Providers from "../mico/persistence/models/stub/providers.json";
 import QualityFilter from "./persistence/models/stub/quality";
 
-// TODO: export and identify where filters should be used
-// function applyFilters(streams: Array<any>, config: any) {
-//     return filterByQuality(filterByProvider(streams, config), config);
-// }
-
-// function filterByProvider(streams: Array<any>, config: any) {
-//     const defaultProviderKeys = Providers.options.map(provider => provider.key);
-//     const providers = config.providers || defaultProviderKeys;
-//     if (!providers || !providers.length) {
-//         return streams;
-//     }
-//     return streams.filter(stream => {
-//         const match = stream.title.match(/⚙.* ([^ \n]+)/);
-//         const provider = match && match[1].toLowerCase();
-//         return providers.includes(provider);
-//     })
-// }
-
-// function filterByQuality(streams: Array<any>, config: any) {
-//     const filters = config[QualityFilter.key];
-//     if (!filters) {
-//         return streams;
-//     }
-//     const filterOptions = QualityFilter.options.filter(option => filters.includes(option.key));
-//     return streams.filter(stream => {
-//         const streamQuality = stream.name.split('\n')[1];
-//         return !filterOptions.some(option => option.test(streamQuality));
-//     });
-// }
-
 export const OTHER_QUALITIES = QualityFilter.options.find(option => option.key === 'other'),
     CAM_QUALITIES = QualityFilter.options.find(option => option.key === 'cam'),
     HEALTHY_SEEDERS = 5,

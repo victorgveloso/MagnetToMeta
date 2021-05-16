@@ -1,7 +1,6 @@
-ARG PORT=57841
 FROM node
 
-ENV PORT=${PORT}
+ENV PORT=3000
 
 WORKDIR /opt/Stremio/Addon
 

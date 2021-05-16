@@ -2,19 +2,21 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
-let {
-getRouter: getDefaultRouter
-} = require('stremio-addon-sdk');
+import { getRouter as getDefaultRouter } from 'stremio-addon-sdk';
 let landingTemplate = require('stremio-addon-sdk/src/landingTemplate');
 let opn = require('opn');
 import { AddressInfo } from "net";
 
+interface AddonInterface {
+    manifest: any;
+    get: (args: { resource: any } & any) => Promise<any>;
+}
 
 export class HttpServer {
-	addonInterface: any
+	addonInterface: AddonInterface
 	opts: any
 	app: express.Express
-	constructor(addonInterface: any, opts = {}) {
+	constructor(addonInterface: AddonInterface, opts = {}) {
 		this.addonInterface = addonInterface;
 		this.opts = opts;
 		this.app = this.createCachedServer();

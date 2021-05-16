@@ -27,7 +27,3 @@ export async function createSeriesStreamHandler(args: any) {
 		streams: sortedStreams
 	};
 }
-
-const builder = new addonBuilder(manifest as Manifest);
-builder.defineStreamHandler(createSeriesStreamHandler);
-export default builder.getInterface() as Object;

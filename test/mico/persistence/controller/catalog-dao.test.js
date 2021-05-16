@@ -1,13 +1,7 @@
 var mongoose = require('mongoose');
 const CatalogDAO = require('../../../../src/mico/persistence/controllers/catalog-dao');
 const Catalog = require('../../../../src/mico/persistence/models/catalog');
-var catalogStub = {
-    type: "movie",
-    id: "BrazilianCatalog",
-    name: "Filmes Dublados (ptbr)",
-    genres: ["Ação", "Animação", "Aventura", "Clássico", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Faroeste", "Guerra", "Músicas", "Nacional", "Policial", "Romance", "Suspense", "Terror"],
-    extraSupported: ["search", "genre"],
-};
+const catalogStub = require('../../../../src/mico/persistence/models/stub/catalog.json');
 var catalogDao, catalog;
 
 jest.retryTimes(5);
