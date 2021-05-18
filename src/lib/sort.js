@@ -1,7 +1,7 @@
 import { OTHER_QUALITIES, CAM_QUALITIES, HEALTHY_SEEDERS, SEEDED_SEEDERS, MIN_HEALTHY_COUNT, MAX_UNHEALTHY_COUNT } from '../config';
 
 
-const SortOptions = {
+export const SortOptions = {
   key: 'sort',
   options: {
     qualitySeeders: {
@@ -23,7 +23,7 @@ const SortOptions = {
   }
 };
 
-function sortStreams(streams, config) {
+export default function sortStreams(streams, config) {
   const sort = config.sort && config.sort.toLowerCase() || undefined;
   if (sort === SortOptions.options.seeders.key) {
     return sortBySeeders(streams);
@@ -128,7 +128,3 @@ function parseSize(sizeText) {
   }
   return Math.floor(parseFloat(sizeText.replace(/,/g, '')) * scale);
 }
-
-export default sortStreams;
-const _SortOptions = SortOptions;
-export { _SortOptions as SortOptions };

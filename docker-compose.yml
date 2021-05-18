@@ -8,6 +8,7 @@ services:
         networks: 
             - db-connection
         environment: 
+            SCRAPER_API_HOST: https://api2-siteplaceholder.herokuapp.com
             PORT: 3000
             DB_HOST: mongo
             DB_PORT: 27017

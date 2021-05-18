@@ -1,8 +1,8 @@
-const BTClient = require("bittorrent-tracker");
-const parseTorrent = require("parse-torrent");
-const async = require('async');
-const needle = require('needle');
-const decode = require('magnet-uri');
+import { scrape } from "bittorrent-tracker";
+import parseTorrent from "parse-torrent";
+import { each } from 'async';
+import needle from 'needle';
+import decode from 'magnet-uri';
 
 const TRACKERS_URL = 'https://ngosang.github.io/trackerslist/trackers_all.txt';
 const SEEDS_CHECK_TIMEOUT = 15 * 1000; // 15 secs
@@ -44,11 +44,11 @@ function _groupByTrackers(torrentsTrackers) {
 }
 
 
-function _scrapeTrackersWithTimeout(mapTrackerInfoHash, callback) {
+function _scrapeTrackersWithTimeout(mapTrackerInfoHash, perTorrentResults, successfullTrackersCount, callback) {
   setTimeout(callback, SEEDS_CHECK_TIMEOUT);
 
-  async.each(Object.keys(mapTrackerInfoHash), function (tracker, ready) {
-    BTClient.scrape({
+  each(Object.keys(mapTrackerInfoHash), function (tracker, ready) {
+    scrape({
       infoHash: mapTrackerInfoHash[tracker],
       announce: tracker
     }, (error, response) => {
@@ -85,12 +85,12 @@ async function _getSeedersPerTorrent(torrentsInput) {
       console.log(`[LOG] Total successful tracker responses: ${successfullTrackersCount}`);
       resolve(perTorrentResults);
     };
-    _scrapeTrackersWithTimeout(perTrackerInfoHashes, callback);
+    _scrapeTrackersWithTimeout(perTrackerInfoHashes, perTorrentResults, successfullTrackersCount, callback);
   });
 }
 
-async function updateCurrentSeeders(torrents) {
-  let perTorrentResults = _getSeedersPerTorrent(torrents);
+export async function updateCurrentSeeders(torrents) {
+  let perTorrentResults = await _getSeedersPerTorrent(torrents);
   const torrentsArray = Array.isArray(torrents) ? torrents : [torrents];
   torrentsArray.forEach(torrent => {
     const results = perTorrentResults[torrent.infoHash];
@@ -118,7 +118,3 @@ async function _getDefaultTrackers(torrent, retry = 3) {
     .then(trackers => trackers.concat(ADDITIONAL_TRACKERS))
     .then(trackers => torrent.type === Type.ANIME ? trackers.concat(ANIME_TRACKERS) : trackers);
 }
-
-module.exports = {
-  updateCurrentSeeders
-};

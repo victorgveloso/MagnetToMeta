@@ -1,8 +1,8 @@
-import { getRouter } from 'stremio-addon-sdk';
+import { getRouter as gerDefaultRouter } from 'stremio-addon-sdk';
 import bodyParser from 'body-parser';
-import disassemble from './controllers/movie-assembler';
-import MetaDAO from './controllers/meta-dao';
-import StreamDAO from './controllers/stream-dao';
+import disassemble from './persistence/controllers/movie-assembler';
+import MetaDAO from './persistence/controllers/meta-dao';
+import StreamDAO from './persistence/controllers/stream-dao';
 
 
 export async function upsertMovieData(movie: any) {
@@ -20,8 +20,12 @@ export async function upsertMovieData(movie: any) {
     });
 }
 
-function getProxyRouter(addonInterface: any) {
-    const router = getRouter(addonInterface);
+/** 
+ * getRouter is a Proxy to the default getRouter 
+ * It includes our custom endpoints
+ */
+export function getRouter(addonInterface: any) {
+    const router = gerDefaultRouter(addonInterface);
 
     router.use(bodyParser.json()); // to support JSON-encoded bodies
     router.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -37,8 +41,3 @@ function getProxyRouter(addonInterface: any) {
 
     return router;
 }
-
-
-export {
-    getProxyRouter as getRouter
-};

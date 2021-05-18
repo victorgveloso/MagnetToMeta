@@ -1,5 +1,3 @@
-export class BuilderError extends Error {}
-
 export class RequestBuilder {
     host: string;
     version: string;
@@ -40,13 +38,13 @@ export class RequestBuilder {
     }
     buildTmdbId(): string {
         if (this._imdbId === undefined) {
-            throw new BuilderError("imdbId must be defined");
+            throw new Error("imdbId must be defined");
         }
         return `https://api.themoviedb.org/3/find/${this._imdbId}?api_key=${this._tmdbToken}&language=pt-BR&external_source=imdb_id`;
     }
     buildDetail(): string {
         if (this._url === undefined) {
-            throw new BuilderError("url must be defined");
+            throw new Error("url must be defined");
         }
         return `${this.host}/${this.version}/magnet-source/detail?url=${this._url}&encoded=${this.encoded}`;
     }
@@ -57,7 +55,7 @@ export class RequestBuilder {
     }
     buildSearch(): string {
         if (this._url === undefined || this._query === undefined) {
-            throw new BuilderError("url and query must be defined");
+            throw new Error("url and query must be defined");
         }
         return `${this.host}/${this.version}/magnet-source/search?url=${this._url}&search_query=${this._query}&encoded=${this.encoded}`;
     }

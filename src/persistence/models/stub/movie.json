@@ -13,5 +13,8 @@
         "runtime": "2 h 21 min",
         "catalogs": ["BrazilianCatalog"]
     },
-    "magnets": [""]
+    "magnets": [{
+        "title": "",
+        "magnet": ""
+    }]
 }

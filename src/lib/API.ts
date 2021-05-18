@@ -3,8 +3,8 @@ import parseTorrent from "parse-torrent";
 import { parse } from "parse-torrent-title";
 import { filesAndSizeFromTorrentStream } from "./files";
 import { updateCurrentSeeders } from "./seeders";
-import { UNKNOWN_SIZE, SCRAPPER_API_HOST } from "../config"
-import { RequestBuilder, BuilderError } from "./RequestBuilder";
+import { UNKNOWN_SIZE, SCRAPER_API_HOST } from "../config"
+import { RequestBuilder } from "./RequestBuilder";
 
 
 function toHumanReadable(size: number): string | undefined {
@@ -17,7 +17,7 @@ function toHumanReadable(size: number): string | undefined {
 export class API {
     private builder: RequestBuilder;
     constructor(builder?: RequestBuilder) {
-        this.builder = builder ? builder : new RequestBuilder(SCRAPPER_API_HOST);
+        this.builder = builder ? builder : new RequestBuilder(SCRAPER_API_HOST);
     }
     async getStream(search: any, episode: string) {
         const url = this.builder.url(search[0].desc_link).buildDetail();
@@ -43,7 +43,7 @@ export class API {
                     infoHash: seeders.infoHash // torrentsInput.infoHash
                 };
                 return data;
-            })
+            });
             const metas = streams.filter((streams: any) => streams.episode == episode)
                 .map((el: any) => {
                     return {
@@ -57,7 +57,7 @@ export class API {
                     };
                 });
             return metas;
-        }))
+        }));
         return stream;
     }
     async resolveName(type: string, imdbId: string) {
@@ -79,12 +79,7 @@ export class API {
         try {
             url = this.builder.query(query).buildSearch();
         } catch (error) {
-            if(error instanceof BuilderError) {
-                url = this.builder.query(query).url("comandotorrent").buildSearch();
-            }
-            else {
-                throw error;
-            }
+            url = this.builder.query(query).url("comandotorrent").buildSearch();
         }
         const search = await axios.get(url);
         return search.data;

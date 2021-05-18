@@ -22,11 +22,20 @@ export class MovieMeta {
     }
 
 }
+export class MovieMagnet {
+    title: string
+    magnet: string
+
+    constructor(title: string, magnet: string) {
+        this.title = title;
+        this.magnet = magnet;
+    }
+}
 export default class Movie {
     meta: MovieMeta
-    magnets: string[]
+    magnets: MovieMagnet[]
 
-    constructor(meta: MovieMeta, magnets: string[]) {
+    constructor(meta: MovieMeta, magnets: MovieMagnet[]) {
         this.magnets = magnets;
         this.meta = meta;
     }

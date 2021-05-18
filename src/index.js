@@ -9,7 +9,7 @@ import ManifestDAO from './persistence/controllers/manifest-dao';
 
 import {
     getRouter
-} from './persistence/router';
+} from './router';
 import {
     HttpServer
 } from './HttpServer';
